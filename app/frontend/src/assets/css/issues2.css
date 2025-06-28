@@ -1,0 +1,270 @@
+* {
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    background-color: black;
+}
+h1{
+    font-size: 1em;
+    font-weight: 20;
+    color: white;
+    letter-spacing: 2px;
+  text-align: center;
+  color: white;
+  margin-top: 100px; /* To push it below the logo */
+  text-transform: uppercase; 
+  
+}
+
+.logo img{
+    position: absolute; 
+    top: 10px;
+    left: 10px;
+    max-width: 4%; 
+    height: auto; 
+}
+.book{
+    position: relative;
+    margin-top: 200px;
+    width: 615px;
+    height: 789px;
+    transition: transfrom 0.5s;
+
+}
+
+.paper img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.paper iframe{
+    width: 100%;
+    height: 100%;
+}
+
+.book,
+.paper{
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+}
+
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    
+    /*perspective: 1500px;*/
+
+}
+
+.front,
+.back {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 0.5s;
+
+
+}
+
+.front{
+    z-index: 1;
+    backface-visibility: hidden;
+    border-left: 5px solid black;
+
+}
+
+.back {
+    z-index: 0;
+}
+.front-content,
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+
+}
+
+.back-content{
+    transform: rotatey(180deg)
+}
+.flipped .front,
+.flipped .back {
+    transform: rotatey(-180deg)
+}
+
+
+
+
+button {
+    border: none;
+    background-color: transparent;
+    transition: transform 0.5s;
+    cursor: pointer;
+    margin: 10px;
+    z-index: 10;
+
+
+   
+}
+
+
+
+button:focus {
+    outline: none;
+}
+
+button:hover i{
+    color: #636363
+}
+i{
+    font-size: 50px;
+    color: black;
+}
+
+
+
+
+
+/* Overlay Close Button */
+#close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 401; 
+}
+
+#overlay {
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+
+.enlarged {
+    position: fixed;
+    justify-content: center;
+    bottom: 5%;
+    right: 5%;
+    width: 150%; 
+    height: auto; 
+    z-index: 105;
+    background-color: white; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+    overflow: hidden; 
+    
+}
+.enlarging {
+    width: 100%;
+    height: 100%;
+ 
+}
+
+
+
+#close-btn {
+    display: none; 
+    position: absolute;
+    top: 5%;
+    right: 5px;
+    font-size: 30px;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 302;
+}
+
+#close-btn:hover {
+    color: red;
+}
+
+#prev-btn, #next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  #prev-btn {
+    left: 200px;
+  }
+  #next-btn {
+    right: 200px;
+  }
+  
+
+  /* Mobile screens */
+  @media screen and (max-width: 600px) {
+    #prev-btn {
+      left: 100px;
+    }
+  
+    #next-btn {
+      right: 100px;
+    }
+  
+    i {
+      font-size: 30px; /* smaller arrow icon */
+    }
+  }
+
+
+@media screen and (max-width: 1024px) {
+    .book {
+        width : 35vw;
+        height: 45vw;
+
+    }
+   
+
+    
+   
+}
+
+
+@media screen and (max-width: 768px) {
+    .book {
+        width : 35vw;
+        height: 45vw;
+
+    }
+    h1{
+        margin-top: 10px;
+    }
+  
+    
+   
+}
+
+@media screen and (max-width: 480px) {
+    .book {
+        width : 35vw;
+        height: 45vw;
+
+    }
+
+}

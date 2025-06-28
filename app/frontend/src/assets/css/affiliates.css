@@ -1,0 +1,172 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    overflow-x: hidden; 
+  }
+  .logo img{
+    position: absolute; 
+    top: 10px;
+    left: 10px;
+    max-width: 4%; 
+    height: auto; 
+}
+
+  
+.background{
+  position: absolute;
+  width:100%;
+  height: 400%;
+  z-index: 1;
+}
+.middle {
+  position: absolute; 
+  padding-top: 40px;
+  margin-top: 200px;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 60%;
+  height: 300%; 
+  background-color: rgb(249, 246, 223); 
+  z-index: 100; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+}
+
+.affiliate-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 20px 40px;
+  background-color: black;
+  color: white;
+  gap: 60px;
+}
+
+.affiliate-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.affiliate-content h1 {
+  font-size: 3em;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.affiliate-description {
+  font-size: 1.1em;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.affiliate-btn {
+  background: white;
+  color: black;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.affiliate-btn:hover,  .affiliate-btn:focus{
+  background: #ddd;
+}
+
+/* Grid-like structure for image sets */
+.affiliate-images,
+.extra-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.affiliate-images img,
+.extra-images img {
+  width: 280px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.affiliate-images img:hover,
+.extra-images img:hover {
+  transform: scale(1.05);
+}
+
+
+.affiliate-stickers {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  margin-top: -80px;
+}
+
+.sticker-left,
+.sticker-right {
+  width: 120px;
+  opacity: 0.8;
+  transform: rotate(-10deg);
+}
+
+.sticker-right {
+  transform: rotate(15deg);
+}
+
+
+.affiliate-collage {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 60px;
+}
+
+.affiliate-collage img {
+  width: 300px;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.sticker-group-left,
+.sticker-group-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .affiliate-images img,
+  .extra-images img {
+    width: 200px;
+    height: 280px;
+  }
+
+  .sticker-left,
+  .sticker-right {
+    width: 80px;
+  }
+
+  .affiliate-content h1 {
+    font-size: 2em;
+  }
+
+  .affiliate-description {
+    font-size: 1em;
+  }
+}

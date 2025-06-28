@@ -1,0 +1,532 @@
+/* General Reset */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  overflow-x: hidden; 
+}
+
+.collage {
+    position: relative;
+    
+}
+
+
+.other {
+    display: flex;
+  align-items: center;  /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.8s ease-in-out;
+}
+
+
+.other img {
+    max-width: 50%;
+    height: auto;
+ 
+}
+
+
+
+  .main-content {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr); 
+    grid-template-rows: repeat(9, 1fr);
+    gap: 0;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+ 
+  }
+  
+  .main-content li {
+    list-style: none;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    animation: appearLayer 0.5s linear forwards;
+    overflow: hidden;
+  }
+  
+  .collage img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: cover;
+  }
+  
+
+  .main-content li:nth-child(20){
+    /* green and pink sticker*/
+    animation-delay: .3s;
+    grid-row: 5 / span 4;
+    grid-column: 3 / span 4;
+    z-index: 2;
+    
+    
+  }
+
+
+
+  .main-content li:nth-child(1){
+    animation-delay: .5s; 
+    grid-row: 1 / span 2;
+    grid-column: 1 / span 2;
+    z-index: 3;
+    
+  
+  }
+
+  
+  .main-content li:nth-child(7){
+    animation-delay: .7s; 
+    grid-row: 6 / span 5;
+    grid-column: 4 / span 5;
+    z-index: 4;
+    
+  }
+
+  .main-content li:nth-child(3){
+    /*bubble gum*/
+    animation-delay: 1s; 
+    grid-row: 1 / span 5;
+    grid-column: 3 / span 7;
+    z-index: 5;
+    
+  }
+
+  .main-content li:nth-child(2){
+    /*grl on couch*/
+    animation-delay: 1.2s; 
+    grid-row: 1 / span 5;
+    grid-column: 1 / span 4;
+    z-index: 6;
+    transform: rotate(20deg);
+    
+  }
+
+  .main-content li:nth-child(4){
+    animation-delay: 1.6s; 
+    grid-row: 4 / span 6;
+    grid-column: 3 / span 4;
+    z-index: 7;
+    
+
+  }
+  .main-content li:nth-child(6){
+    /*josephone*/
+    animation-delay: 1.9s; 
+    grid-row: 1 / span 4;
+    grid-column: 8 / span 4;
+    width: 100%;
+    z-index: 8;
+    
+  }
+
+  .main-content li:nth-child(5){
+    /*office core elevator*/
+    animation-delay: 2.3s; 
+    grid-row: 4 / span 7;
+    grid-column: 1 / span 3;
+    z-index: 9;
+    
+  }
+
+ 
+  
+
+  .main-content li:nth-child(8){
+    /*alex room looking at mag*/
+    animation-delay: 2.4s; 
+    grid-row: 6 / span 4;
+    grid-column: 3 / span 4;
+    z-index: 10;
+    
+  }
+
+
+
+  .main-content li:nth-child(9){
+    /*ice cream hand*/
+    animation-delay: 2.8s; 
+    grid-row: 7 / span 3;
+    grid-column: 1 / span 2;
+    z-index: 11;
+    
+
+  }
+
+  .main-content li:nth-child(10){
+    /* gavin ice cream*/
+    animation-delay: 3.2s;
+    grid-row: 4 / span 5;
+    grid-column: 6 / span 4;
+    z-index: 12;
+    transform: rotate(-20deg);
+    
+  }
+
+
+
+  .main-content li:nth-child(11){
+    /* stair case pic*/
+    animation-delay: 3.5s;
+    grid-row: 8 / span 4;
+    grid-column: 9 / span 5;
+    z-index: 13;
+    
+  }
+
+
+  .main-content li:nth-child(12){
+    /*me holding pillow*/
+    animation-delay: 3.9s; 
+    grid-row: 1 / span 5;
+    grid-column: 6 / span 4;
+    z-index: 14;
+    transform: rotate(20deg);
+    
+  
+   
+  }
+  
+  .main-content li:nth-child(14){
+    /* office core holding appple*/
+    animation-delay: 4.2s; 
+    grid-row: 1 / span 5;
+    grid-column: 2 / span 4;
+    z-index: 16;
+    
+   
+  }
+  .main-content li:nth-child(15){
+    /* 4 office core*/
+    animation-delay: 4.5s; 
+    grid-row: 4 / span 5;
+    grid-column: 8 / span 4;
+    z-index: 17;
+    
+  }
+
+  .main-content li:nth-child(16){
+    /* green sticker*/
+    visibility: hidden;
+    /* animation-delay: 4.8s; */
+    grid-row: 4 / span 5;
+    grid-column: 1 / span 4;
+    z-index: 18;
+  }
+  .main-content li:nth-child(17){
+    /* mouth*/
+    animation-delay: 4.8s; 
+    grid-row: 7 / span 5;
+    grid-column: 7 / span 4;
+    z-index: 19;
+    
+  }
+  .main-content li:nth-child(18){
+    /* red tix*/
+    animation-delay: 5.2s; 
+    grid-row: 6 / span 2;
+    grid-column: 2 / span 2;
+    z-index: 20;
+  }
+ 
+
+  .main-content li:nth-child(19){
+   /* asquared pink sticker*/
+    animation-delay: 5.4s; 
+    grid-row: 2 / span 2;
+    grid-column: 7 / span 2;
+    z-index: 21;
+    transform: rotate(-20deg);
+  }
+
+  .main-content li:nth-child(21){
+    /* Digi cam */
+    animation-delay: 5.7s; 
+     grid-row: 1 / span 4;
+     grid-column: 1 / span 3;
+     z-index: 22;
+     transform: rotate(-20deg);
+
+   }
+
+   .main-content li:nth-child(22){
+    /* leather */
+     animation-delay: 5.9s; 
+     grid-row: 8 / span 4;
+     grid-column: 7 / span 4;
+     z-index: 23;
+     transform: rotate(-10deg);
+
+   }
+
+   .main-content li:nth-child(23){
+    /* shoeprint */
+     animation-delay: 6.2s; 
+     grid-row: 3 / span 2;
+     grid-column: 4 / span 2;
+     z-index: 24;
+ 
+   }
+   .main-content li:nth-child(24){
+    /* polaroid */
+    animation-delay: 6.4s; 
+     grid-row: 7 / span 3;
+     grid-column: 1 / span 5;
+     z-index: 25;
+
+   }
+
+   .main-content li:nth-child(25){
+    /* patch */
+     animation-delay: 6.7s; 
+     grid-row: 7 / span 3;
+     grid-column: 4 / span 3;
+     z-index: 26;
+     transform: rotate(-20deg);
+
+   }
+
+   .main-content li:nth-child(26){
+    /* mp3player */
+    /* animation-delay: 7s; */
+    visibility: hidden;
+     grid-row: 4 / span 3;
+     grid-column: 4 / span 4;
+     z-index: 27;
+     transform: rotate(20deg);
+
+   }
+
+   .main-content li:nth-child(27){
+    /* price sticker */
+    animation-delay: 7s; 
+     grid-row: 6 / span 2;
+     grid-column: 6 / span 2;
+     z-index: 28;
+
+   }
+
+   .main-content li:nth-child(28){
+    /* tix 1 */
+    animation-delay: 7.3s; 
+    grid-row: 1 / span 2;
+    grid-column: 4 / span 2;
+     z-index: 29;
+     transform: rotate(-10deg);
+
+   }
+
+   .main-content li:nth-child(29){
+    /* tix 2 */
+     animation-delay: 7.6s; 
+     grid-row: 7 / span 2;
+     grid-column: 5 / span 2;
+     z-index: 30;
+     transform: rotate(20deg);
+    
+   }
+
+
+   .main-content li:nth-child(30){
+    /* vinyl */
+     animation-delay: 7.9s; 
+     grid-row: 1 / span 2;
+     grid-column: 9/ span 2;
+     z-index: 31;
+  
+   }
+
+   .main-content li:nth-child(31){
+    /* random circle sticker thing */
+    animation-delay: 8.3s; 
+     grid-row: 4 / span 2;
+     grid-column: 1 / span 2;
+     z-index: 32;
+     transform: rotate(15deg);
+   
+   }
+
+   .main-content li:nth-child(13){
+    /* Bubble sticker*/
+    animation-delay: 5.6s; 
+    grid-row: 4 / span 6;
+    grid-column: 7 / span 6;
+    z-index: 33;
+  }
+
+
+
+
+
+
+
+ 
+
+
+ 
+  @keyframes appearLayer {
+    100%{
+      opacity: 1;
+    }
+  }
+
+
+  @keyframes appearLayer2 {
+    0%{
+        opacity: 0;
+      }
+    100%{
+      opacity: 1;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+
+    .collage img{
+        max-width: 130%;
+    }
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr; /* 9 equal columns */
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 3fr; /* 13 equal rows */
+        gap: 0;
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        left: 0;
+        bottom: 0;
+      }
+
+      .main-content li:nth-child(9){
+        /*ice cream hand*/
+        grid-row: 8 / span 3;
+        grid-column: 1 / span 3;
+        z-index: 10;
+    
+      }
+
+      .main-content li:nth-child(5){
+        /*office core elevator*/
+        grid-row: 5 / span 7;
+        grid-column: 1 / span 4;
+        z-index: 8;
+      }
+
+      .main-content li:nth-child(17){
+        /* mouth*/
+        grid-row: 9 / span 5;
+        grid-column: 5 / span 4;
+        z-index: 18;
+      }
+      
+
+  }
+
+  @media screen and (max-width: 480px) {
+    .collage img {
+        max-width: 130%;
+
+    }
+   
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr; /* 9 equal columns */
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr; /* 13 equal rows */
+        gap: 0;
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        left: 0;
+        bottom: 0;
+      }
+      
+      .main-content li {
+        list-style: none;
+        position: absolute;
+        width: 100%;
+        height: auto;
+        /*opacity: 0;
+        animation: appearLayer 0.5s linear forwards;*/
+      }
+      .main-content li:nth-child(1){
+        /*ice cream hand*/
+        grid-row: 1 / span 7;
+        grid-column: 1 / span 6;
+        z-index: 10;
+    
+      }
+
+      .main-content li:nth-child(9){
+        /*ice cream hand*/
+        grid-row: 9 / span 3;
+        grid-column: 1 / span 3;
+        z-index: 10;
+    
+      }
+
+      .main-content li:nth-child(5){
+        /*office core elevator*/
+        grid-row: 4 / span 7;
+        grid-column: 1 / span 4;
+        z-index: 8;
+      }
+
+      .main-content li:nth-child(17){
+        /* mouth*/
+        grid-row: 9 / span 5;
+        grid-column: 4 / span 6;
+        z-index: 18;
+      }
+
+      .main-content li:nth-child(11){
+        /* stair case pic */
+        grid-row: 6 / span 7;
+        grid-column: 8 / span 5;
+        z-index: 9;
+      }
+      .main-content li:nth-child(1){
+   
+        grid-row: 1 / span 4;
+        grid-column: 1 / span 4;
+        z-index: 2;
+        
+      
+      }
+  
+    
+
+  }
+
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20vh);
+    visibility: hidden;
+    transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+    will-change: opacity, visibility;
+  }
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }

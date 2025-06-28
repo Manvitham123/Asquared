@@ -1,0 +1,171 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    overflow: hidden; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.logo img {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 4%;
+    height: auto;
+}
+
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+}
+
+.banner {
+    display: flex;
+    position: absolute;
+    width: 350%; 
+    height: 100%;
+    animation: slide 35s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.banner img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%); 
+    }
+}
+
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; 
+    max-width: 400px; 
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+
+.form-container h1 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    font-weight: 100;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 100;
+    color: white;
+}
+
+.form-group input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    border-color: white;
+    outline: none;
+}
+
+.form-group button {
+    width: 80%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+
+.form-group button:hover {
+    background-color: grey;
+}
+
+.logo2{
+   transform: translate(40%, 0%);
+    
+    
+}
+.logo2 img {
+    padding-top: 3vh;
+    padding-bottom: 5px;
+    position: absolute; 
+    width: 20%; 
+    height: auto; 
+    object-fit: contain; 
+    max-width: none; 
+    justify-content: center;
+
+}
+
+
+@media screen and (max-width: 768px) {
+    .banner-container {
+        position: relative;
+        width: 100%;
+        height: 90vh;
+        overflow: hidden;
+    }
+    
+    .banner {
+        display: flex;
+        position: absolute;
+        width: 790%; 
+        height: 100%;
+        animation: slide 35s linear infinite;
+    }
+   
+    
+}
+
+
+@media screen and (max-width: 480px) {
+    .banner-container {
+        position: relative;
+        width: 100%;
+        height: 90vh;
+        overflow: hidden;
+    }
+    
+    .banner {
+        display: flex;
+        position: absolute;
+        width: 1200%; 
+        height: 100%;
+        animation: slide 35s linear infinite;
+    }
+   
+}
