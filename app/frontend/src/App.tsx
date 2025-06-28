@@ -1,5 +1,6 @@
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {Routes, Route } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './theme/theme';
 import LandingPage from './pages/LandingPage';
@@ -26,7 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
         
 <Route path="/" element={<LandingPage />} />
@@ -44,7 +45,7 @@ function App() {
            <Route path="/blog-upload" element={<BlogUpload />} />
 
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   )
 }
