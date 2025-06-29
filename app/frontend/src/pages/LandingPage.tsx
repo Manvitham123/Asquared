@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../assets/css/index2.css";
 import "../assets/css/navbar.css";
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     const timer = setTimeout(() => {
-      window.location.href = "/index";
+       navigate('/index');
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
@@ -15,7 +17,7 @@ const LandingPage: React.FC = () => {
     
         <a href="/index3">
           <img
-            src="/images/logo.avif"
+            src="https://asquared-images.s3.us-east-2.amazonaws.com/images/logo.avif"
             className="hi"
             alt="Logo with the letter a and an exponent of two"
           />

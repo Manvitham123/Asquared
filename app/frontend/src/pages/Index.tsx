@@ -46,14 +46,14 @@ const Index3Page: React.FC = () => {
     <main>
       <div className="collage">
         <div className="other">
-          <img src="/images/asquared-logo-white-better.avif" alt="a squared logo of asquared spelled out in block letters" />
+          <img src="https://asquared-images.s3.us-east-2.amazonaws.com/images/asquared-logo-white-better.avif" alt="a squared logo of asquared spelled out in block letters" />
         </div>
         <ul className="main-content">
           {Array.from({ length: 31 }, (_, i) => (
             <li key={i}>
               <img
                 rel="preload"
-                src={`/images/${getImagePath(i + 1)}`}
+                src={`https://asquared-images.s3.us-east-2.amazonaws.com/images/${getImagePath(i + 1)}`}
                 alt={`Gallery image ${i + 1}`}
               />
             </li>
@@ -67,7 +67,7 @@ const Index3Page: React.FC = () => {
             <div className="middle">
     
                 
-             <img src="/images/logo.avif" className="hi" alt="Logo with the letter a and an exponent of two" />
+             <img src="https://asquared-images.s3.us-east-2.amazonaws.com/images/logo.avif" className="hi" alt="Logo with the letter a and an exponent of two" />
               <div className="surround">
                 <a href="/index.html" tabIndex={0}>Home</a>
                 <a href="/about.html" tabIndex={0}>About us</a>

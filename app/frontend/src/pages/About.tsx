@@ -26,6 +26,11 @@ const AboutPage: React.FC = () => {
             <p>
               We’re not just a magazine. We’re a platform, a party, a protest, and a point of view.
             </p>
+            <img
+              src="https://asquared-images.s3.us-east-2.amazonaws.com/images/logo.avif"
+              className="hi"
+              alt="Logo with the letter a and an exponent of two"
+            />
           </section>
         </div>
       </main>

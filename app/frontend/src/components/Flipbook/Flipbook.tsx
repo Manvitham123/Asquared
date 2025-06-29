@@ -143,7 +143,7 @@ const goPrevPage = () => {
                 className={`front-content ${enlargedPage === idx * 2 ? 'enlarged' : ''}`}
                 onClick={() => toggleEnlarge(idx * 2)}
               >
-                {left && <img src={left} alt={`Page ${idx * 2 + 1}`} />}
+                {left && <img src={left.startsWith('http') ? left : `https://asquared-images.s3.us-east-2.amazonaws.com/images/${left.replace(/^\/+/, '')}`} alt={`Page ${idx * 2 + 1}`} />}
               </div>
             </div>
             <div className="back">
@@ -151,7 +151,7 @@ const goPrevPage = () => {
                 className={`back-content ${enlargedPage === idx * 2 + 1 ? 'enlarged' : ''}`}
                 onClick={() => toggleEnlarge(idx * 2 + 1)}
               >
-                {right && <img src={right} alt={`Page ${idx * 2 + 2}`} />}
+                {right && <img src={right.startsWith('http') ? right : `https://asquared-images.s3.us-east-2.amazonaws.com/images/${right.replace(/^\/+/, '')}`} alt={`Page ${idx * 2 + 2}`} />}
               </div>
             </div>
           </div>

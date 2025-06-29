@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../assets/css/navbar.css";
 
 const Navbar: React.FC = () => (
@@ -10,13 +11,13 @@ const Navbar: React.FC = () => (
       />
     </div>
     <ul>
-      <li><a href="/index.html" tabIndex={0}>Home</a></li>
-      <li><a href="/about.html" tabIndex={0}>About us</a></li>
-      <li><a href="/issues.html" tabIndex={0}>Mags</a></li>
-      <li><a href="/joinus.html" tabIndex={0}>Join Us</a></li>
-      <li><a href="/events.html" tabIndex={0}>Events</a></li>
-      <li><a href="/affiliates.html" tabIndex={0}>Affiliate program</a></li>
-      <li><a href="/shoots.html" tabIndex={0}>Blog</a></li>
+      <li><Link to="/" tabIndex={0}>Home</Link></li>
+      <li><Link to="/about" tabIndex={0}>About us</Link></li>
+      <li><Link to="/issues" tabIndex={0}>Mags</Link></li>
+      <li><Link to="/joinus" tabIndex={0}>Join Us</Link></li>
+      <li><Link to="/events" tabIndex={0}>Events</Link></li>
+      <li><Link to="/affiliates" tabIndex={0}>Affiliate program</Link></li>
+      <li><Link to="/blog" tabIndex={0}>Blog</Link></li>
     </ul>
   </nav>
 );

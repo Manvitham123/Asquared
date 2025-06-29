@@ -1,4 +1,3 @@
-
 import {Routes, Route } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
@@ -13,11 +12,7 @@ import Issues4 from './pages/Issues4';
 import Index3Page from './pages/Index';
 import BlogUpload from './pages/BlogUpload';
 import Blog from './pages/Blog';
-
-
-
-
-
+import BlogDetailPage from './pages/BlogDetail';
 
 import MagazineGallery from './pages/Issues';
 import AboutPage from './pages/About';
@@ -40,9 +35,9 @@ function App() {
             <Route path="/issue3" element={<Issues3 />} /> 
              <Route path="/issue4" element={<Issues4 />} /> 
              <Route path="/blog" element={<Blog />} />
-         
           {/* make these routes protected with OAUTH */}
            <Route path="/blog-upload" element={<BlogUpload />} />
+           <Route path="/blog/:title" element={<BlogDetailPage />} />
 
         </Routes>
       </HashRouter>

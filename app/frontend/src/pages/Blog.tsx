@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import Modal from "react-modal";
+import { Link } from "react-router-dom";
 import Masonry from 'react-masonry-css';
 import '../assets/css/blog.css';
 
@@ -12,73 +12,110 @@ const breakpointColumnsObj = {
 
 const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
 
-const blogPosts = [
-  { id: 1, image: `${S3_PREFIX}/images/oct-issue/p21.jpg`, title: "First Post", uploader: "Alice", date: "2025-06-26" },
-  { id: 2, image: `${S3_PREFIX}/images/oct-issue/p22.jpg`, title: "Second Post", uploader: "Bob", date: "2025-06-24" },
-  { id: 3, image: `${S3_PREFIX}/images/oct-issue/p23.jpg`, title: "Third Post", uploader: "Charlie", date: "2025-06-22" },
-];
-
-interface BlogPost {
-  id: number;
-  image: string;
+interface BlogThumb {
   title: string;
-  uploader: string;
   date: string;
+  thumbnail: string;
 }
 
 const Blog: React.FC = () => {
-  const isAuthenticated = true; // Replace with real auth
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [thumbnails, setThumbnails] = useState<BlogThumb[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5001/api/list-images')
+      .then(res => res.json())
+      .then(data => {
+        // Find all thumbnails: images/blog/{title}/thumbnail.{ext}
+        const thumbs: BlogThumb[] = (data.images || [])
+          .filter((key: string) => key.startsWith('images/blog/') && key.includes('/thumbnail'))
+          .map((key: string) => {
+            const parts = key.split('/');
+            const title = parts[2];
+            // Find the date from the main image in the same folder
+            const mainImage = (data.images || []).find((img: string) => img.startsWith(`images/blog/${title}/`) && !img.includes('thumbnail'));
+            let date = '';
+            if (mainImage) {
+              const file = mainImage.split('/')[3];
+              date = file.split('.')[0];
+            }
+            // Fallback to a very old date if missing or invalid
+            const safeDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : '1970-01-01';
+            return {
+              title,
+              date: safeDate,
+              thumbnail: `${S3_PREFIX}/${key}`
+            };
+          });
+        // Sort by date descending (most recent first) using Date objects
+        thumbs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setThumbnails(thumbs);
+      });
+  }, []);
+
+  // Card component to handle dynamic height based on image aspect ratio
+  const BlogCard: React.FC<{ post: BlogThumb; idx: number }> = ({ post, idx }) => {
+    const defaultHeights = [180, 220, 250, 280];
+    const [imgHeight, setImgHeight] = useState<number>(defaultHeights[idx % defaultHeights.length]);
+
+    function handleImgLoad(e: React.SyntheticEvent<HTMLImageElement, Event>) {
+      const img = e.currentTarget;
+      const aspect = img.naturalHeight / img.naturalWidth;
+      // If image is portrait or very tall, make the card taller
+      if (aspect > 1.2) {
+        setImgHeight(320);
+      } else if (aspect > 0.9) {
+        setImgHeight(260);
+      } else {
+        setImgHeight(defaultHeights[idx % defaultHeights.length]);
+      }
+    }
+
+    return (
+      <div className="blog-post-card cursor-pointer group mb-4 flex flex-col items-center">
+        <Link to={`/blog/${post.title}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+          <img
+            src={post.thumbnail}
+            alt={post.title}
+            className="w-full object-cover rounded-lg shadow-md"
+            style={{ height: imgHeight, transition: 'height 0.3s' }}
+            onLoad={handleImgLoad}
+          />
+          <h2 className="mt-2 font-semibold text-lg text-center">{post.title}</h2>
+          <p className="text-center text-sm text-gray-500">{post.date}</p>
+        </Link>
+      </div>
+    );
+  };
+
+  // Highlight the most recent post
+  const mostRecent = thumbnails.length > 0 ? thumbnails[0] : null;
+  const rest = thumbnails.slice(1);
 
   return (
     <div>
       <Navbar />
-      <main className="p-6">
-        <h1 className="text-3xl font-bold mb-4">Blog</h1>
-        {isAuthenticated && (
-          <a href="/blog-upload" className="upload-btn bg-blue-600 text-white px-4 py-2 rounded mb-6 inline-block">Upload New Post</a>
-        )}
-
+      <main className="p-6" style={{ marginTop: '80px' }}>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {blogPosts.map(post => (
-            <div
-              key={post.id}
-              className="relative cursor-pointer group mb-4"
-              onClick={() => setSelectedPost(post)}
-            >
-              <img src={post.image} alt={post.title} className="w-full object-cover rounded-lg shadow-md" />
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex flex-col justify-end p-4">
-                <h2 className="text-white font-semibold text-lg">{post.title}</h2>
-                <p className="text-white text-sm">{post.uploader} • {post.date}</p>
-              </div>
+          {mostRecent && (
+            <div key={mostRecent.title} className="blog-post-card most-recent-card cursor-pointer group mb-4 flex flex-col items-center" style={{ gridColumn: 'span 2', width: '100%' }}>
+              <Link to={`/blog/${mostRecent.title}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+                <div style={{ position: 'relative' }}>
+                  <img src={mostRecent.thumbnail} alt={mostRecent.title} className="w-full object-cover rounded-lg shadow-lg" style={{ height: 350 }} />
+                  <span style={{ position: 'absolute', top: 10, left: 10, background: 'black', color: 'white', padding: '4px 12px', borderRadius: '8px', fontWeight: 600, fontSize: '1rem' }}>New!</span>
+                </div>
+                <h2 className="mt-2 font-bold text-2xl text-center">{mostRecent.title}</h2>
+                <p className="text-center text-base text-gray-500">{mostRecent.date}</p>
+              </Link>
             </div>
+          )}
+          {rest.map((post, idx) => (
+            <BlogCard key={post.title} post={post} idx={idx} />
           ))}
         </Masonry>
-
-        {selectedPost && (
-          <Modal
-            isOpen={true}
-            onRequestClose={() => setSelectedPost(null)}
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4"
-            overlayClassName=""
-          >
-            <div className="bg-white p-4 rounded-lg max-w-3xl w-full">
-              <img src={selectedPost.image} alt={selectedPost.title} className="w-full rounded" />
-              <h2 className="text-xl font-bold mt-4">{selectedPost.title}</h2>
-              <p className="text-gray-600">Uploaded by {selectedPost.uploader} on {selectedPost.date}</p>
-              <button
-                onClick={() => setSelectedPost(null)}
-                className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
-              >
-                Close
-              </button>
-            </div>
-          </Modal>
-        )}
       </main>
     </div>
   );
