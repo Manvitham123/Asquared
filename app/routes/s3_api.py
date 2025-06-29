@@ -101,6 +101,7 @@ def replace_image():
 
 @s3_api.route('/api/list-images', methods=['GET'])
 def list_images():
+    print("Listing images in S3 bucket")
     try:
         response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix='images/')
         image_keys = [obj['Key'] for obj in response.get('Contents', []) if obj['Key'] != 'images/']
