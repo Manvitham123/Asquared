@@ -1,8 +1,9 @@
 import os
 import boto3
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, app, request, jsonify
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+from .auth_utils import token_and_user_required
 
 load_dotenv()
 
@@ -17,6 +18,7 @@ BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
 s3_api = Blueprint('s3_api', __name__)
 
 @s3_api.route('/api/upload', methods=['POST'])
+@token_and_user_required
 def upload_image():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
@@ -30,6 +32,7 @@ def upload_image():
 
 #check if filename is the same
 @s3_api.route('/api/blog-upload', methods=['POST'])
+@token_and_user_required
 def upload_blog():
     # ...validation...
     file = request.files['file']
@@ -108,3 +111,7 @@ def list_images():
         return jsonify({'images': image_keys}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@s3_api.route('/health')
+def health():
+    return "OK", 200
