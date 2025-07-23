@@ -45,36 +45,29 @@ const openBook = () => {
   const nextBtn = nextBtnRef.current;
   const width = window.innerWidth;
 
-//come back to this the book is not moving to the center when closed
-  if (book) book.style.transform = "translateX(50%)";
-
-  if (prevBtn && nextBtn) {
-    if (width <= 900) {
-      prevBtn.style.transform = "translateX(-300%)";
-      nextBtn.style.transform = "translateX(300%)";
-    } else {
-      prevBtn.style.transform = "translateX(-100px)";
-      nextBtn.style.transform = "translateX(100px)";
+  // Only shift the book and arrows on desktop screens
+  if (book && width > 900) {
+    book.style.transform = "translateX(50%)";
+    if (prevBtn && nextBtn) {
+      prevBtn.style.transform = "translateX(-130px)"; // Move arrows out wider
+      nextBtn.style.transform = "translateX(130px)";
+    }
+  } else {
+    // On mobile/tablet, keep book and arrows centered, but move arrows out a bit
+    if (book) book.style.transform = "translateX(0%)";
+    if (prevBtn && nextBtn) {
+      prevBtn.style.transform = "translateX(-50px)";
+      nextBtn.style.transform = "translateX(50px)";
     }
   }
 };
 
-const closeBook = (isAtBeginning: boolean) => {
-    
+const closeBook = () => {
   const book = bookRef.current;
   const prevBtn = prevBtnRef.current;
   const nextBtn = nextBtnRef.current;
-  console.log(`Closing book at ${isAtBeginning ? 'beginning' : 'end'}`);
-
-  if (book) {
-    console.log("Closing book");
-    if (isAtBeginning) book.style.transform = "translateX(-300%)";
-    else    
-    book.style.transform = "translateX(-100%)";
-  }
-
-  
-
+  // Always center the book and arrows when closed
+  if (book) book.style.transform = "translateX(0%)";
   if (prevBtn && nextBtn) {
     prevBtn.style.transform = "translateX(0px)";
     nextBtn.style.transform = "translateX(0px)";
@@ -89,7 +82,7 @@ const closeBook = (isAtBeginning: boolean) => {
     console.log(`Going to page ${nextLocation}`);
     if (currentLocation === 0) openBook();
     if (nextLocation === maxLocation - 1) {
-      closeBook(false); // Closing the book at the end
+      closeBook(); // Closing the book at the end
     }
 
     const paper = document.getElementById(`paper-${currentLocation}`);
@@ -100,20 +93,19 @@ const closeBook = (isAtBeginning: boolean) => {
 };
 
 const goPrevPage = () => {
-  const prevIndex = currentLocation - 1;
-  console.log(`Going to page ${prevIndex}`);
-  if (prevIndex === 1) {
-    console.log("Closing book at the beginning");
-    closeBook(true); // Closing the book at the beginning
-  }
-  if (currentLocation > 0 && currentLocation <= maxLocation) {
-    if (currentLocation === maxLocation - 1) openBook(); // Opening the book
-  }
-  if (currentLocation > 1) {
-    const paper = document.getElementById(`paper-${prevIndex}`);
+  if (currentLocation > 0) {
+    const prevIndex = currentLocation - 1;
+    console.log(`Going to page ${prevIndex}`);
+    // Remove flipped from the current page (not prevIndex)
+    const paper = document.getElementById(`paper-${currentLocation}`);
     paper?.classList.remove('flipped');
-    paper?.style && (paper.style.zIndex = `${pages.length - prevIndex + 1}`);
+    paper?.style && (paper.style.zIndex = `${pages.length - currentLocation + 1}`);
     setCurrentLocation(prevIndex);
+    if (prevIndex === 0) {
+      closeBook();
+    } else if (currentLocation === maxLocation - 1) {
+      openBook();
+    }
   }
 };
   const toggleEnlarge = (index: number) => {
@@ -143,7 +135,7 @@ const goPrevPage = () => {
                 className={`front-content ${enlargedPage === idx * 2 ? 'enlarged' : ''}`}
                 onClick={() => toggleEnlarge(idx * 2)}
               >
-                {left && <img src={left.startsWith('http') ? left : `https://asquared-images.s3.us-east-2.amazonaws.com/images/${left.replace(/^\/+/, '')}`} alt={`Page ${idx * 2 + 1}`} />}
+                {left && <img src={left.startsWith('http') ? left : `https://d1gmweuuxd5quh.cloudfront.net/images/${left.replace(/^\/+/, '')}`} alt={`Page ${idx * 2 + 1}`} />}
               </div>
             </div>
             <div className="back">
@@ -151,7 +143,7 @@ const goPrevPage = () => {
                 className={`back-content ${enlargedPage === idx * 2 + 1 ? 'enlarged' : ''}`}
                 onClick={() => toggleEnlarge(idx * 2 + 1)}
               >
-                {right && <img src={right.startsWith('http') ? right : `https://asquared-images.s3.us-east-2.amazonaws.com/images/${right.replace(/^\/+/, '')}`} alt={`Page ${idx * 2 + 2}`} />}
+                {right && <img src={right.startsWith('http') ? right : `https://d1gmweuuxd5quh.cloudfront.net/images/${right.replace(/^\/+/, '')}`} alt={`Page ${idx * 2 + 2}`} />}
               </div>
             </div>
           </div>

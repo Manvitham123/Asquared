@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
 import '../assets/css/index3.css';
 import '../assets/css/home.css';
 
@@ -43,46 +44,49 @@ const Index3Page: React.FC = () => {
 
   return (
     <>
-    <main>
-      <div className="collage">
-        <div className="other">
-          <img src="https://asquared-images.s3.us-east-2.amazonaws.com/images/asquared-logo-white-better.avif" alt="a squared logo of asquared spelled out in block letters" />
+      <main>
+        <div className="collage">
+          <div className="other">
+            <img src="https://d1gmweuuxd5quh.cloudfront.net/images/asquared-logo-white-better.avif" alt="a squared logo of asquared spelled out in block letters" />
+          </div>
+          <ul className="main-content">
+            {Array.from({ length: 31 }, (_, i) => (
+              <li key={i}>
+                <img
+                  rel="preload"
+                  src={`https://d1gmweuuxd5quh.cloudfront.net/images/${getImagePath(i + 1)}`}
+                  alt={`Gallery image ${i + 1}`}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="main-content">
-          {Array.from({ length: 31 }, (_, i) => (
-            <li key={i}>
-              <img
-                rel="preload"
-                src={`https://asquared-images.s3.us-east-2.amazonaws.com/images/${getImagePath(i + 1)}`}
-                alt={`Gallery image ${i + 1}`}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
 
-      <div className="fade-in-section">
-        <div className="nav" role="navigation" aria-label="Main site navigation">
-          <div className="wrapper">
-            <div className="middle">
-    
-                
-             <img src="https://asquared-images.s3.us-east-2.amazonaws.com/images/logo.avif" className="hi" alt="Logo with the letter a and an exponent of two" />
-              <div className="surround">
-                <a href="/index.html" tabIndex={0}>Home</a>
-                <a href="/about.html" tabIndex={0}>About us</a>
-                <a href="/issues.html" tabIndex={0}>Mags</a>
-                <a href="/joinus.html" tabIndex={0}>Join Us</a>
-                <a href="/events.html" tabIndex={0}>Events</a>
-                <a href="/affiliates.html" tabIndex={0}>Affiliate program</a>
-                <a href="/shoots.html" tabIndex={0}>Blog</a>
+        <div className="fade-in-section">
+          <div className="nav" role="navigation" aria-label="Main site navigation">
+            <div className="wrapper">
+              <div className="middle">
+                <Link to="/">
+                  <img
+                    src="https://d1gmweuuxd5quh.cloudfront.net/images/logo.avif"
+                    className="hi" 
+                    alt="Logo with the letter a and an exponent of two"
+                  />
+                </Link>
+                <div className="surround">
+                  <Link to="/about" tabIndex={0}>About</Link>
+                  <Link to="/magazines" tabIndex={0}>Mags</Link>
+                  <Link to="/joinus" tabIndex={0}>Join Us</Link>
+                  <Link to="/events" tabIndex={0}>Events</Link>
+                  <Link to="/affiliates" tabIndex={0}>Affiliates</Link>
+                  <Link to="/blog" tabIndex={0}>Blog</Link>
+                </div>
               </div>
+              <h1 className="footer-text">ART + FASHION + CULTURE</h1>
             </div>
-            <h1 className="footer-text">ART + FASHION + CULTURE</h1>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
     </>
   );
 };
@@ -101,3 +105,13 @@ function getImagePath(index: number): string {
 }
 
 export default Index3Page;
+
+/* CSS: In your home.css or index3.css, update the .surround a:nth-child(n) rules to match the number of links (7 in this case):
+.surround a:nth-child(1) { transform: rotate(0deg) translate(17vw) rotate(0deg); }
+.surround a:nth-child(2) { transform: rotate(51.43deg) translate(17vw) rotate(-51.43deg); }
+.surround a:nth-child(3) { transform: rotate(102.86deg) translate(17vw) rotate(-102.86deg); }
+.surround a:nth-child(4) { transform: rotate(154.29deg) translate(17vw) rotate(-154.29deg); }
+.surround a:nth-child(5) { transform: rotate(205.72deg) translate(17vw) rotate(-205.72deg); }
+.surround a:nth-child(6) { transform: rotate(257.15deg) translate(17vw) rotate(-257.15deg); }
+.surround a:nth-child(7) { transform: rotate(308.58deg) translate(17vw) rotate(-308.58deg); }
+*/

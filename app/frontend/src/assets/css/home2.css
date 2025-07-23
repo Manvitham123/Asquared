@@ -1,0 +1,126 @@
+.home2-bg {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.home2-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url('/assets/images/grain.png'); /* Place your grain texture here */
+  opacity: 0.25;
+  mix-blend-mode: multiply;
+  z-index: 2;
+}
+
+.home2-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home2-logo-nav {
+  position: relative;
+  width: 70vw;
+  max-width: 900px;
+  height: 90vh;
+  max-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home2-logo {
+  position: absolute;
+  left: 55%;
+  top: 50%;
+  transform: translate(-40%, -50%);
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+}
+
+.home2-logo-img {
+  width: 18vw;
+  max-width: 260px;
+  min-width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 16px #0008;
+}
+
+.home2-nav-arc {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.home2-nav-btn {
+  display: block;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 2vw;
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  padding: 0.5em 2.5em;
+  background: rgba(0,0,0,0.15);
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  margin-bottom: 1.5vw;
+  pointer-events: auto;
+  position: absolute;
+  left: 0;
+}
+
+.home2-nav-btn-0 { top: 7%; left: 35%; width: 32%; }
+.home2-nav-btn-1 { top: 20%; left: 18%; width: 22%; }
+.home2-nav-btn-2 { top: 33%; left: 10%; width: 22%; }
+.home2-nav-btn-3 { top: 50%; left: 12%; width: 22%; }
+.home2-nav-btn-4 { top: 65%; left: 18%; width: 22%; }
+.home2-nav-btn-5 { top: 80%; left: 32%; width: 28%; }
+
+.home2-nav-btn:hover {
+  background: #fff;
+  color: #111;
+  border-color: #fff;
+}
+
+@media (max-width: 700px) {
+  .home2-logo-img {
+    width: 32vw;
+    max-width: 180px;
+  }
+  .home2-nav-btn {
+    font-size: 4vw;
+    padding: 0.5em 1.5em;
+  }
+  .home2-logo-nav {
+    max-width: 98vw;
+    height: 90vh;
+  }
+  .home2-nav-btn-0 { top: 7%; left: 10%; width: 70%; }
+  .home2-nav-btn-1 { top: 20%; left: 2%; width: 60%; }
+  .home2-nav-btn-2 { top: 33%; left: 0%; width: 60%; }
+  .home2-nav-btn-3 { top: 50%; left: 0%; width: 60%; }
+  .home2-nav-btn-4 { top: 65%; left: 2%; width: 60%; }
+  .home2-nav-btn-5 { top: 80%; left: 10%; width: 70%; }
+}

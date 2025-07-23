@@ -1,5 +1,5 @@
 import {Routes, Route } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './theme/theme';
 import LandingPage from './pages/LandingPage';
@@ -17,12 +17,20 @@ import BlogDetailPage from './pages/BlogDetail';
 import MagazineGallery from './pages/Issues';
 import AboutPage from './pages/About';
 
+import JoinUs from './pages/JoinUs';
+import Affiliates from './pages/Affiliates';
+import Events from './pages/Events';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
+import LoginPrompt from './pages/LoginPrompt';
+import AuthCallback from './pages/AuthCallback';
+
+
 function App() {
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
         
 <Route path="/" element={<LandingPage />} />
@@ -35,14 +43,24 @@ function App() {
             <Route path="/issue3" element={<Issues3 />} /> 
              <Route path="/issue4" element={<Issues4 />} /> 
              <Route path="/blog" element={<Blog />} />
-          {/* make these routes protected with OAUTH */}
+          <Route path="/joinus" element={<JoinUs />} />
+          <Route path="/affiliates" element={<Affiliates />} />
+          <Route path="/events" element={<Events />} />
+          
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
            <Route path="/blog-upload" element={<BlogUpload />} />
+           </Route>
            <Route path="/blog/:title" element={<BlogDetailPage />} />
+           <Route path="/login-prompt" element={<LoginPrompt />} />
+           <Route path="/login" element={<LoginPrompt />} />
+           <Route path="/login-callback" element={<AuthCallback />} />
 
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </ThemeProvider>
   )
 }
 
 export default App
+

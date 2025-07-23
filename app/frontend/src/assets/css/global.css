@@ -6,10 +6,12 @@ html, body, #root {
   background: black;
   color: white;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
+  font-weight: 800;
 }

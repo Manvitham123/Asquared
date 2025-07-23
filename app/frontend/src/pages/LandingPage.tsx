@@ -10,14 +10,14 @@ const LandingPage: React.FC = () => {
        navigate('/index');
     }, 3000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigate]);
 
   return (
     <main>
     
         <a href="/index3">
           <img
-            src="https://asquared-images.s3.us-east-2.amazonaws.com/images/logo.avif"
+            src="https://d1gmweuuxd5quh.cloudfront.net/images/logo.avif"
             className="hi"
             alt="Logo with the letter a and an exponent of two"
           />

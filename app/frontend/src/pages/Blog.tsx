@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import Masonry from 'react-masonry-css';
-import '../assets/css/blog.css';
-
+import '../assets/css/blog.css'
+const API_URL = import.meta.env.VITE_API_URL;
 const breakpointColumnsObj = {
   default: 3,
   1100: 2,
   700: 1
 };
 
-const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
+// const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
+const S3_PREFIX = "https://d1gmweuuxd5quh.cloudfront.net"; // Updated to use CloudFront for better performance
 
 interface BlogThumb {
   title: string;
@@ -22,7 +23,7 @@ const Blog: React.FC = () => {
   const [thumbnails, setThumbnails] = useState<BlogThumb[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5001/api/list-images')
+    fetch(`${API_URL}/api/list-images`)
       .then(res => res.json())
       .then(data => {
         // Find all thumbnails: images/blog/{title}/thumbnail.{ext}
@@ -80,7 +81,7 @@ const Blog: React.FC = () => {
             style={{ height: imgHeight, transition: 'height 0.3s' }}
             onLoad={handleImgLoad}
           />
-          <h2 className="mt-2 font-semibold text-lg text-center">{post.title}</h2>
+          <h2 className="mt-2 font-semibold text-lg text-center">{post.title.replace(/_/g, ' ')}</h2>
           <p className="text-center text-sm text-gray-500">{post.date}</p>
         </Link>
       </div>
@@ -107,7 +108,7 @@ const Blog: React.FC = () => {
                   <img src={mostRecent.thumbnail} alt={mostRecent.title} className="w-full object-cover rounded-lg shadow-lg" style={{ height: 350 }} />
                   <span style={{ position: 'absolute', top: 10, left: 10, background: 'black', color: 'white', padding: '4px 12px', borderRadius: '8px', fontWeight: 600, fontSize: '1rem' }}>New!</span>
                 </div>
-                <h2 className="mt-2 font-bold text-2xl text-center">{mostRecent.title}</h2>
+                <h2 className="mt-2 font-bold text-2xl text-center">{mostRecent.title.replace(/_/g, ' ')}</h2>
                 <p className="text-center text-base text-gray-500">{mostRecent.date}</p>
               </Link>
             </div>

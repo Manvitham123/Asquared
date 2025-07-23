@@ -1,75 +1,182 @@
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    left: 10%;
-    top: 0;
-    display: flex;
-    align-items: left;
-    /* Add background for visibility on small screens */
-    width: 100%; /* Full width */
-    z-index: 101; /* Ensure it stays above other content */
-    /*flex-wrap: wrap;  Allow wrapping on smaller screens */
+/* NEW NAVBAR STYLING */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px; /* increased from 60px to 90px */
+  background-color: #111; /* nostalgic neutral */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-bottom: 1px solid #F8F4EF;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-li {
-    float: none; /* Remove floating to enable flexbox behavior */
-    margin: 0 10px; /* Add spacing between items */
+.nav-inner {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  margin-bottom: 0;
+  height: 70px; /* adjust as needed for best fit */
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+  flex-direction: row;
 }
 
 li a {
-    display: block;     
-    color: white;
-    text-align: center;
-    padding: 10px 50px;
-    text-decoration: none;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    font-size: 1vw;
-    font-weight: 600;
-    border: 2px solid #ffffff;
-    border-radius: 5px;
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: 100;
+  text-decoration: none;
+  color: #F8F4EF;
+  padding: 8px 18px;
+  border-radius: 999px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  background-color: transparent;
 }
 
-li a:hover, li a:focus{
-    text-decoration: underline;
-    background-color: black;
+li a:hover,
+li a:focus {
+  border-color: #fff;
+  background-color: #111;
+  color: grey;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2000;
+  color: #fff;
+}
+.hamburger .bar {
+  width: 32px;
+  height: 5px;
+  background: #fff !important;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: all 0.3s;
+  opacity: 1;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  border: 1px solid #fff;
+}
+
+.hamburger:focus, .hamburger:hover {
+  outline: none;
+  color: #fff;
+}
 
 @media screen and (max-width: 768px) {
-    ul {
-        padding: 10px 0; 
-        z-index: 100;
-        left: 0%;
-    }
-   
-    li a {
-        font-size: 3vw; 
-        padding: 5px 0; 
-    }
+  nav {
+    height: auto;
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hamburger {
+    display: flex;
+    position: absolute;
+    top: 18px;
+    right: 18px;
+  }
+  .nav-inner {
+    display: none;
+    width: 100%;
+    background: #111;
+    position: absolute;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 0 16px 0;
+    z-index: 1001;
+    padding-top: 30px;
+    top: 0px; /* Add this line to push the dropdown below the nav bar */
+    left: 0;
+    background-color: rgba(17, 17, 17, 0.8);
+  }
+  .nav-inner.open {
+    display: flex;
+  }
+  .logo img {
+    height: 60px !important;
+    max-height: 140px !important;
+    width: auto !important;
+    max-width: 180px !important;
+    object-fit: contain;
+    margin-bottom: 12px;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  ul {
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    align-items: flex-start;
+  }
+  li a {
+    padding: 12px 18px;
+    font-size: 1rem;
+    border-radius: 12px;
+    width: 100%;
+    display: block;
+    background: transparent;
+    margin: 0;
+    text-align: left;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .logo {
-       visibility: hidden;
-    }
-    ul {
-        left: 0%;
-        padding: 10px 0; 
-        z-index: 100;
-    }
-
-    li a {
-        font-size: 2.5vw; 
-        padding: 5px 0;
-    }
-}
-.logo {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  width: 1500px;
-  height: auto;
-  z-index: 1000;
+  nav {
+    height: auto;
+    padding: 0 5px;
+  }
+  .hamburger {
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+  }
+  .nav-inner {
+    top: 0px;
+  }
+  .logo img {
+    height: 50px !important;
+    max-height: 60px !important;
+    width: auto !important;
+    max-width: 100px !important;
+    object-fit: contain;
+  }
+  li a {
+    font-size: 0.95rem;
+    padding: 8px 8px;
+  }
 }

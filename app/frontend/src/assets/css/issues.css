@@ -4,10 +4,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    
-
+    font-weight: 800;
 }
-
 
 .logo img {
     position: absolute; 
@@ -36,7 +34,7 @@ div{
 .magazine-container h1 {
     font-size: 2em;
     margin-bottom: 20px;
-    font-weight: 20;
+    font-weight: 800;
 }
 
 .magazine-gallery {
@@ -66,5 +64,47 @@ div{
 .magazine p {
     margin-top: 20px;
     font-size: 15px;
-    font-weight: 100;
+    font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  .magazine-gallery {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .magazine {
+    width: 90%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .magazine-container {
+    padding: 0 5px;
+  }
+  .magazine-container h1 {
+    font-size: 1.3em;
+    margin-bottom: 12px;
+  }
+  .magazine p {
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  .logo img {
+    max-width: 18vw;
+    top: 6px;
+    left: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .magazine {
+    width: 98%;
+    max-width: 98vw;
+  }
+  .magazine-container h1 {
+    font-size: 1.1em;
+  }
+  .magazine p {
+    font-size: 13px;
+  }
 }

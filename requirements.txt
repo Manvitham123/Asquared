@@ -33,3 +33,4 @@ python-dotenv
 requests
 gunicorn
 Authlib
+PyJWT

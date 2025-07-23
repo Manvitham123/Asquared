@@ -3,7 +3,8 @@ import { Flipbook } from '../components/Flipbook/Flipbook';
 import '../assets/css/flipbook.css';
 import Navbar from "../components/Navbar";
 
-const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
+//const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
+const S3_PREFIX = "https://d1gmweuuxd5quh.cloudfront.net"; // Updated to use CloudFront for better performance
 
 const pages = [
   `${S3_PREFIX}/images/Fall-2024-issue/cover.jpg`,

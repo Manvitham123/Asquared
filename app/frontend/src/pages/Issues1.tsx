@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flipbook } from '../components/Flipbook/Flipbook';
 import '../assets/css/flipbook.css';
+import Flipbook2 from '../components/Flipbook/Flipbook2';
 import Navbar from "../components/Navbar";
 
-const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
+//const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
+const S3_PREFIX = "https://d1gmweuuxd5quh.cloudfront.net"; // Updated to use CloudFront for better performance
 
 const pages = [
   `${S3_PREFIX}/images/sept-issue/cover.jpg`,
@@ -29,12 +31,27 @@ const pages = [
 ];
 
 const Issues1: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <>
       <Navbar />
-    <div className="issues2-wrapper">
-      <Flipbook pages={pages} title="Fall 2022 Edition" />
-    </div>
+      <div className="issues2-wrapper">
+        {isMobile ? (
+          <Flipbook2 pages={pages} title="Fall 2022 Edition" />
+        ) : (
+          <Flipbook pages={pages} title="Fall 2022 Edition" />
+        )}
+      </div>
     </>
   );
 };

@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/Asquared/', // or '/' for custom domain
+  base: '/', // or '/' for custom domain
   plugins: [react()],
 })
 

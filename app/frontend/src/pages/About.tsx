@@ -18,19 +18,16 @@ const AboutPage: React.FC = () => {
           <section className="about-us" aria-labelledby="about-header">
             <h2 id="about-header">About Us</h2>
             <p>
-              Asquared Magazine is a student-powered exploration of fashion, identity, and creative culture at the University of Michigan. We believe in DIY aesthetics, radical collaboration, and storytelling that pushes boundaries.
+              Welcome to A/squared Magazine — your guide to fashion, culture, and the arts in Ann Arbor.
             </p>
             <p>
-              Every issue is a collective experiment — mixing photography, writing, styling, and design to reflect the world around us, and reimagine the one we want to build.
+               Created by students, for students, we highlight emerging trends, local creatives, and the unique voices shaping our campus and city. From style spotlights to cultural commentary, every piece reflects the energy of our community.
             </p>
             <p>
-              We’re not just a magazine. We’re a platform, a party, a protest, and a point of view.
+              Explore what's making Ann Arbor now. ☆
             </p>
-            <img
-              src="https://asquared-images.s3.us-east-2.amazonaws.com/images/logo.avif"
-              className="hi"
-              alt="Logo with the letter a and an exponent of two"
-            />
+        
+
           </section>
         </div>
       </main>

@@ -26,8 +26,8 @@
 .book {
   position: relative;
   margin-top: 40px;
-  width: 615px;
-  height: 789px;
+  width: 30%;
+  height:80%;
   transform: translateX(0%); /* ✅ keep it closed initially */
   transition: transform 0.5s;
 }
@@ -58,7 +58,7 @@
 .front,
 .back {
   position: absolute;
-  background-color: white;
+  /*background-color: white;*/
   width: 100%;
   height: 100%;
   top: 0;
@@ -68,7 +68,7 @@
 }
 
 .paper .back {
-  transform: rotateY(180deg); /* flip for back */
+ /* transform: rotateY(180deg); flip for back */
 }
 .paper:not(.flipped) .back {
   display: none; /* Hides the back page when not flipped */
@@ -83,11 +83,15 @@
   z-index: 1;
   backface-visibility: hidden;
   border-left: 5px solid black;
+
 }
 
 .back {
   z-index: 0;
   transform: rotateY(180deg);
+}
+.back img {
+  transform: scaleX(-1);
 }
 
 .front-content,
@@ -113,7 +117,7 @@
   width: 150%;
   height: auto;
   z-index: 105;
-  background-color: white;
+  /*background-color: white;*/
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
@@ -154,6 +158,7 @@ button:hover {
 /* Responsive tweaks */
 @media screen and (max-width: 1024px) {
   .book {
+    margin-top: 35%;
     width: 35vw;
     height: 45vw;
   }
@@ -172,16 +177,45 @@ button:hover {
 }
 
 @media screen and (max-width: 480px) {
+  .flipbook-container {
+    padding: 0 0 24px 0;
+    align-items: center;
+    justify-content: flex-start;
+  }
   .book {
-    width: 35vw;
-    height: 45vw;
+    width: 95vw;
+    aspect-ratio: 4/5;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    margin-top: 48px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
   .nav-button.prev {
-    left: 60px;
+    left: 2vw;
+    font-size: 2.2rem;
   }
-
   .nav-button.next {
-    right: 60px;
+    right: 2vw;
+    font-size: 2.2rem;
+  }
+  .front-content, .back-content {
+    font-size: 1.1rem;
+    padding: 8px;
+  }
+  .flipbook-container h2 {
+    font-size: 0.95em;
+    margin-top: 48px;
+  }
+  .paper img, .paper iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
   }
 }
