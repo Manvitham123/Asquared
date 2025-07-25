@@ -6,8 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A/squared Magazine</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fredoka+One&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-Cb14GNzT.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BU1h-De0.css">
+    <script>
+      if (sessionStorage.redirect) {
+        const redirectUrl = sessionStorage.redirect;
+        sessionStorage.removeItem('redirect');
+        history.replaceState(null, '', redirectUrl);
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-rfOkadYL.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-H7j1r-LR.css">
   </head>
   <body>
     <div id="root"></div>
