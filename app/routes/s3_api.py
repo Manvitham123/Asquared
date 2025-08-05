@@ -30,29 +30,52 @@ def upload_image():
     url = f'https://{BUCKET_NAME}.s3.amazonaws.com/images/{filename}'
     return jsonify({'url': url}), 200
 
-#check if filename is the same
-@s3_api.route('/api/blog-upload', methods=['POST'])
+#check if filename is the same@s3_api.route('/api/blog-upload', methods=['POST'])
 @token_and_user_required
 def upload_blog():
-    # ...validation...
-    file = request.files['file']
+    # Validate thumbnail
+    if 'thumbnail' not in request.files:
+        return jsonify({'error': 'No thumbnail provided'}), 400
     thumbnail = request.files['thumbnail']
-    title = secure_filename(request.form['title'])
-    date = request.form['date']
-    # Get file extensions
-    file_ext = os.path.splitext(file.filename)[1]
-    thumb_ext = os.path.splitext(thumbnail.filename)[1]
-    # S3 keys
-    main_key = f'images/blog/{title}/{date}{file_ext}'
-    thumb_key = f'images/blog/{title}/thumbnail{thumb_ext}'
-    # Upload
-    s3.upload_fileobj(file, BUCKET_NAME, main_key)
-    s3.upload_fileobj(thumbnail, BUCKET_NAME, thumb_key)
-    # URLs
-    main_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{main_key}'
-    thumb_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{thumb_key}'
-    return jsonify({'main_url': main_url, 'thumbnail_url': thumb_url}), 200
 
+    # Find all post images
+    post_files = []
+    idx = 0
+    while True:
+        file_key = f'posts[{idx}][file]'
+        title_key = f'posts[{idx}][title]'
+        date_key = f'posts[{idx}][date]'
+        if file_key not in request.files:
+            break
+        file = request.files[file_key]
+        title = secure_filename(request.form.get(title_key, f'post_{idx}'))
+        date = request.form.get(date_key, '')
+        post_files.append({'file': file, 'title': title, 'date': date})
+        idx += 1
+
+    if not post_files:
+        return jsonify({'error': 'No post images provided'}), 400
+
+    # Upload thumbnail
+    thumb_ext = os.path.splitext(thumbnail.filename)[1]
+    thumb_key = f'images/blog/thumbnail_{os.urandom(8).hex()}{thumb_ext}'
+    s3.upload_fileobj(thumbnail, BUCKET_NAME, thumb_key)
+    thumb_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{thumb_key}'
+
+    # Upload each post image
+    post_urls = []
+    for post in post_files:
+        file_ext = os.path.splitext(post['file'].filename)[1]
+        main_key = f'images/blog/{post['title']}_{post['date']}{file_ext}'
+        s3.upload_fileobj(post['file'], BUCKET_NAME, main_key)
+        main_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{main_key}'
+        post_urls.append({
+            'title': post['title'],
+            'date': post['date'],
+            'url': main_url
+        })
+
+    return jsonify({'thumbnail_url': thumb_url, 'posts': post_urls}), 200
 '''
 @s3_api.route('/api/blog-upload', methods=['POST'])
 def upload_blog():
@@ -115,3 +138,31 @@ def list_images():
 @s3_api.route('/health')
 def health():
     return "OK", 200
+
+from .sheets_utils import append_to_sheet
+
+@s3_api.route('/api/joinus-submit', methods=['POST'])
+def joinus_submit():
+    data = request.get_json()
+    required_fields = ["name", "email", "grade", "gender", "interests", "questions", "hear"]
+
+    # Validate incoming fields
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"Missing field: {field}"}), 400
+
+    # Append to Google Sheet
+    try:
+        row = [
+            data["name"],
+            data["email"],
+            data["grade"],
+            data["gender"],
+            data["interests"],
+            data.get("questions", ""),
+            data.get("hear", "")
+        ]
+        append_to_sheet(row)
+        return jsonify({"success": True, "message": "Data saved to Google Sheets"}), 200
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
