@@ -30,52 +30,40 @@ def upload_image():
     url = f'https://{BUCKET_NAME}.s3.amazonaws.com/images/{filename}'
     return jsonify({'url': url}), 200
 
-#check if filename is the same@s3_api.route('/api/blog-upload', methods=['POST'])
+@s3_api.route('/api/blog-upload', methods=['POST'])
 @token_and_user_required
 def upload_blog():
-    # Validate thumbnail
+    # Validate required fields
     if 'thumbnail' not in request.files:
         return jsonify({'error': 'No thumbnail provided'}), 400
+    if 'title' not in request.form:
+        return jsonify({'error': 'No title provided'}), 400
+    if 'date' not in request.form:
+        return jsonify({'error': 'No date provided'}), 400
+    images = request.files.getlist('images[]')
+    if not images or len(images) == 0:
+        return jsonify({'error': 'No images provided'}), 400
+
     thumbnail = request.files['thumbnail']
-
-    # Find all post images
-    post_files = []
-    idx = 0
-    while True:
-        file_key = f'posts[{idx}][file]'
-        title_key = f'posts[{idx}][title]'
-        date_key = f'posts[{idx}][date]'
-        if file_key not in request.files:
-            break
-        file = request.files[file_key]
-        title = secure_filename(request.form.get(title_key, f'post_{idx}'))
-        date = request.form.get(date_key, '')
-        post_files.append({'file': file, 'title': title, 'date': date})
-        idx += 1
-
-    if not post_files:
-        return jsonify({'error': 'No post images provided'}), 400
+    title = secure_filename(request.form['title'])
+    date = request.form['date']
 
     # Upload thumbnail
     thumb_ext = os.path.splitext(thumbnail.filename)[1]
-    thumb_key = f'images/blog/thumbnail_{os.urandom(8).hex()}{thumb_ext}'
+    thumb_key = f'images/blog/{title}/thumbnail{thumb_ext}'
     s3.upload_fileobj(thumbnail, BUCKET_NAME, thumb_key)
     thumb_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{thumb_key}'
 
-    # Upload each post image
-    post_urls = []
-    for post in post_files:
-        file_ext = os.path.splitext(post['file'].filename)[1]
-        main_key = f'images/blog/{post['title']}_{post['date']}{file_ext}'
-        s3.upload_fileobj(post['file'], BUCKET_NAME, main_key)
-        main_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{main_key}'
-        post_urls.append({
-            'title': post['title'],
-            'date': post['date'],
-            'url': main_url
-        })
+    # Upload each image
+    image_urls = []
+    for idx, img in enumerate(images):
+        img_ext = os.path.splitext(img.filename)[1]
+        img_key = f'images/blog/{title}/{date}_{idx}{img_ext}'
+        s3.upload_fileobj(img, BUCKET_NAME, img_key)
+        img_url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{img_key}'
+        image_urls.append(img_url)
 
-    return jsonify({'thumbnail_url': thumb_url, 'posts': post_urls}), 200
+    return jsonify({'thumbnail_url': thumb_url, 'image_urls': image_urls}), 200
 '''
 @s3_api.route('/api/blog-upload', methods=['POST'])
 def upload_blog():
