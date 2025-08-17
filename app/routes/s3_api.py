@@ -2,12 +2,34 @@
 import os
 import json
 import boto3
-from flask import Blueprint, app, request, jsonify
+from flask import Blueprint, app, request, jsonify, make_response, current_app
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from .auth_utils import token_and_user_required
+from functools import wraps
 
 load_dotenv()
+
+def add_cors_headers(response):
+    """Add CORS headers to the response"""
+    allowed_origins = current_app.config.get('CORS_ORIGINS', ['http://localhost:3000'])
+    origin = request.headers.get('Origin')
+    if origin in allowed_origins:
+        response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+def handle_options_request(f):
+    """Decorator to handle OPTIONS requests with CORS headers"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.method == 'OPTIONS':
+            response = make_response()
+            return add_cors_headers(response)
+        return f(*args, **kwargs)
+    return decorated_function
 
 s3 = boto3.client(
     's3',
@@ -18,7 +40,14 @@ s3 = boto3.client(
 BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
 
 s3_api = Blueprint('s3_api', __name__)
-@s3_api.route('/api/member-upload', methods=['POST'])
+
+@s3_api.after_request
+def after_request(response):
+    """Add CORS headers after each request"""
+    return add_cors_headers(response)
+
+@s3_api.route('/api/member-upload', methods=['POST', 'OPTIONS'])
+@handle_options_request
 @token_and_user_required
 def upload_member():
     # Validate required fields
@@ -66,7 +95,8 @@ def upload_member():
         "member": member_info,
         "imageUrl": image_url
     }), 200
-@s3_api.route('/api/upload', methods=['POST'])
+@s3_api.route('/api/upload', methods=['POST', 'OPTIONS'])
+@handle_options_request
 @token_and_user_required
 def upload_image():
     if 'file' not in request.files:
@@ -79,7 +109,8 @@ def upload_image():
     url = f'https://{BUCKET_NAME}.s3.amazonaws.com/images/{filename}'
     return jsonify({'url': url}), 200
 
-@s3_api.route('/api/blog-upload', methods=['POST'])
+@s3_api.route('/api/blog-upload', methods=['POST', 'OPTIONS'])
+@handle_options_request
 @token_and_user_required
 def upload_blog():
     # Validate required fields
@@ -182,7 +213,8 @@ def upload_blog():
         'metadataUrl': f'https://{BUCKET_NAME}.s3.amazonaws.com/{metadata_key}'
     }), 200
 
-@s3_api.route('/api/event-upload', methods=['POST'])
+@s3_api.route('/api/event-upload', methods=['POST', 'OPTIONS'])
+@handle_options_request
 def upload_event():
     # Validate required fields
     if 'title' not in request.form:
@@ -245,7 +277,8 @@ def upload_event():
         'metadataUrl': f'https://{BUCKET_NAME}.s3.amazonaws.com/{metadata_key}'
     }), 200
 
-@s3_api.route('/api/blog-list', methods=['GET'])
+@s3_api.route('/api/blog-list', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def list_blogs():
     """List all blog posts by finding their metadata files"""
     try:
@@ -274,7 +307,8 @@ def list_blogs():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@s3_api.route('/api/event-list', methods=['GET'])
+@s3_api.route('/api/event-list', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def list_events():
     """List all events by finding their metadata files"""
     try:
@@ -326,7 +360,8 @@ def list_events():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@s3_api.route('/api/event/<slug>', methods=['GET'])
+@s3_api.route('/api/event/<slug>', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def get_event(slug):
     """Get a specific event by its slug"""
     try:
@@ -343,7 +378,8 @@ def get_event(slug):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@s3_api.route('/api/blog/<slug>', methods=['GET'])
+@s3_api.route('/api/blog/<slug>', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def get_blog(slug):
     """Get a specific blog post by its slug"""
     try:
@@ -389,7 +425,8 @@ def upload_blog():
     url = f'https://{BUCKET_NAME}.s3.amazonaws.com/images/{title}'
     return jsonify({'url': url}), 200
 '''
-@s3_api.route('/api/delete', methods=['POST'])
+@s3_api.route('/api/delete', methods=['POST', 'OPTIONS'])
+@handle_options_request
 def delete_image():
     data = request.get_json()
     key = data.get('key')
@@ -398,7 +435,8 @@ def delete_image():
     s3.delete_object(Bucket=BUCKET_NAME, Key=key)
     return jsonify({'message': 'Deleted'}), 200
 
-@s3_api.route('/api/replace', methods=['POST'])
+@s3_api.route('/api/replace', methods=['POST', 'OPTIONS'])
+@handle_options_request
 def replace_image():
     if 'file' not in request.files or 'key' not in request.form:
         return jsonify({'error': 'File and key required'}), 400
@@ -408,7 +446,8 @@ def replace_image():
     url = f'https://{BUCKET_NAME}.s3.amazonaws.com/{key}'
     return jsonify({'url': url}), 200
 
-@s3_api.route('/api/list-images', methods=['GET'])
+@s3_api.route('/api/list-images', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def list_images():
     print("Listing images in S3 bucket")
     try:
@@ -418,7 +457,8 @@ def list_images():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@s3_api.route('/api/member-delete/<path:folder_path>', methods=['DELETE'])
+@s3_api.route('/api/member-delete/<path:folder_path>', methods=['DELETE', 'OPTIONS'])
+@handle_options_request
 @token_and_user_required
 def delete_member(folder_path):
     """Delete a member and their associated files"""
@@ -456,7 +496,8 @@ def delete_member(folder_path):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@s3_api.route('/api/team-list', methods=['GET'])
+@s3_api.route('/api/team-list', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def list_team_members():
     """List all team members by finding their metadata files"""
     try:
@@ -485,13 +526,15 @@ def list_team_members():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@s3_api.route('/health')
+@s3_api.route('/health', methods=['GET', 'OPTIONS'])
+@handle_options_request
 def health():
     return "OK", 200
 
 from .sheets_utils import append_to_sheet
 
-@s3_api.route('/api/joinus-submit', methods=['POST'])
+@s3_api.route('/api/joinus-submit', methods=['POST', 'OPTIONS'])
+@handle_options_request
 def joinus_submit():
     data = request.get_json()
     required_fields = ["name", "email", "grade", "gender", "interests", "questions", "hear"]
@@ -518,7 +561,8 @@ def joinus_submit():
         return jsonify({"success": False, "error": str(e)}), 500
 
 
-@s3_api.route('/api/event-delete/<path:folder_path>', methods=['DELETE'])
+@s3_api.route('/api/event-delete/<path:folder_path>', methods=['DELETE', 'OPTIONS'])
+@handle_options_request
 def delete_event(folder_path):
     """Delete an event and all its associated files"""
     try:
