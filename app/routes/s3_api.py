@@ -518,43 +518,6 @@ def joinus_submit():
         return jsonify({"success": False, "error": str(e)}), 500
 
 
-@s3_api.route('/api/blog-delete/<path:slug>', methods=['DELETE'])
-@token_and_user_required
-def delete_blog(slug):
-    """Delete a blog post and all its associated files"""
-    try:
-        # Ensure the folder_path starts with images/blog/
-        folder_path = f'images/blog/{slug}'
-        
-        # Add trailing slash if not present
-        if not folder_path.endswith('/'):
-            folder_path += '/'
-        
-        # List all objects in the blog folder
-        response = s3.list_objects_v2(Bucket=BUCKET_NAME, Prefix=folder_path)
-        
-        if 'Contents' not in response:
-            return jsonify({'error': 'Blog post not found'}), 404
-        
-        # Delete all files in the blog folder
-        objects_to_delete = [{'Key': obj['Key']} for obj in response['Contents']]
-        
-        if objects_to_delete:
-            s3.delete_objects(
-                Bucket=BUCKET_NAME,
-                Delete={'Objects': objects_to_delete}
-            )
-        
-        return jsonify({
-            'success': True,
-            'message': 'Blog post deleted successfully',
-            'deletedFiles': len(objects_to_delete),
-            'folderPath': folder_path
-        }), 200
-        
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 @s3_api.route('/api/event-delete/<path:folder_path>', methods=['DELETE'])
 def delete_event(folder_path):
     """Delete an event and all its associated files"""
