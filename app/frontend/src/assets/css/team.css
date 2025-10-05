@@ -1,0 +1,386 @@
+/* Global overflow prevention */
+html, body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Team Page Styles */
+.team-page {
+  background: transparent;
+  min-height: 100vh;
+  font-family: 'Archivo Black', sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  object-fit: contain;
+  background-color: #7e9db0;
+}
+
+/* Header Section */
+.team-header {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  object-fit: contain;
+  overflow: hidden;
+  margin: 0;
+  margin-top: 20px;
+  position: relative; /* anchor for separator */
+  
+}
+
+.header-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Team Sections */
+.team-section {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+}
+
+.team-section:first-of-type {
+  margin-top: 0;
+}
+
+/* Background image container (anchor for bottom separator) */
+.section-background {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: auto;
+  position: relative;   /* anchor for separator */
+  max-width: 100%;
+  margin: 0;
+  padding: 0;           /* moved vertical padding to .section-content */
+}
+
+/* Inner content (now provides vertical spacing) */
+.section-content {
+  max-width: 1400px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem;   /* moved from .section-background */
+}
+
+.section-title {
+  font-size: 3rem;
+  text-align: center;
+  color: #f5f5f5;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.creative-team-title {
+  display: block;
+  max-width: 400px;
+  margin: 0 auto 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+/* Specific styles for larger team titles */
+.executive-board .creative-team-title,
+.events-team .creative-team-title,
+.creative-team .creative-team-title {
+  max-width: 500px; /* Increased from 400px */ /* More space below */
+  transform: scale(1.1); /* Makes the image 10% larger */
+  transition: transform 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .executive-board .creative-team-title,
+  .events-team .creative-team-title,
+  .creative-team .creative-team-title {
+    max-width: 400px;
+    transform: scale(1.05);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .executive-board .creative-team-title,
+  .events-team .creative-team-title,
+  .creative-team .creative-team-title {
+    max-width: 320px;
+    transform: none;
+  }
+}
+
+/* Chalk text styling */
+.chalk-text {
+  color: #f5f5f5;
+  font-family: 'Courier New', monospace;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+/* Team Grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem 4.5rem;
+  justify-items: center;
+  width: 100%;
+
+}
+
+/* Team Member Card */
+.team-member {
+  text-align: center;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 280px;
+}
+
+.photo-container {
+  position: relative;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 250px;
+  padding-top: 20px; /* Space for tape */
+}
+
+.photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: #f5f5f5;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.placeholder-photo {
+  width: 100%;
+  height: 100%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.member-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
+/* Tape styling */
+.tape-center-top {
+  position: absolute;
+  width: 100px;
+  height: 75px;
+  z-index: 3;
+  
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background: transparent;
+}
+
+/* Member Info */
+.member-info {
+  margin-top: 1rem;
+}
+
+.member-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  color: #f5f5f5;
+}
+
+.member-position {
+  font-size: 1rem;
+  margin: 0;
+  color: rgba(245, 245, 245, 0.8);
+  font-style: italic;
+}
+
+/* Put this with your other separator rules */
+.section-separator,
+.section-separator-one {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  background: transparent;
+  pointer-events: none;
+
+  /* Crop the PNG's top whitespace (~10px of 126px ≈ 8%) so the wood sits flush */
+  clip-path: inset(8% 0 0 0);
+
+  /* Optional: add a tiny overlap to guarantee no hairline seam on some browsers */
+  transform: translateY(1px);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .section-content {
+    padding: 2rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .creative-team-title {
+    max-width: 300px;
+    margin-bottom: 2rem;
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem 1rem;
+    padding: 1rem;
+  }
+  
+  .team-member {
+    max-width: 220px;
+  }
+  
+  .photo-container {
+    max-width: 200px;
+  }
+  
+  .tape-center-top {
+    width: 70px;
+    height: 60px;
+  }
+  
+  .member-name {
+    font-size: 1rem;
+  }
+  
+  .member-position {
+    font-size: 0.9rem;
+  }
+  
+  .team-member {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .team-page {
+    overflow-x: hidden;
+  }
+  
+  .header-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .section-content {
+    max-width: 100%;
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .creative-team-title {
+    max-width: 280px;
+    margin-bottom: 0;
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1rem;
+    padding: 0.5rem;
+  }
+  
+  .team-member {
+    max-width: 160px;
+  }
+
+  .photo-container {
+    max-width: 160px;
+  }
+  
+  .tape-center-top {
+    width: 55px;
+    height: 40px;
+  }
+  
+  .member-name {
+    font-size: 0.95rem;
+  }
+  
+  .member-position {
+    font-size: 0.8rem;
+  }
+  
+  .team-member {
+    margin-bottom: 1rem;
+  }
+  
+  .member-info {
+    margin-top: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .section-content {
+    padding: 1rem 0.25rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .creative-team-title {
+    max-width: 250px;
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 0.5rem;
+  }
+  
+  .team-member {
+    max-width: 140px;
+  }
+
+  .photo-container {
+    max-width: 140px;
+  }
+  
+  .tape-center-top {
+    width: 40px;
+    height: 35px;
+  }
+  
+  .member-name {
+    font-size: 0.85rem;
+  }
+  
+  .member-position {
+    font-size: 0.75rem;
+  }
+}

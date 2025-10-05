@@ -1,16 +1,33 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-
-const API_BASE = import.meta.env.VITE_API_URL ;
+const API_BASE = import.meta.env.VITE_API_URL;
 
 const LoginPrompt: React.FC = () => {
+  const location = useLocation();
+  const { state } = location;
+  
+  // Get redirect path from URL parameters first, then state, then default
+  const params = new URLSearchParams(location.search);
+  const redirectPath = params.get('redirect_to');
+  const from = redirectPath || (state as { from?: string })?.from || '/blog-upload';
+  
+  console.log('LoginPrompt: URL redirect_to param:', redirectPath);
+  console.log('LoginPrompt: State from:', (state as { from?: string })?.from);
+  console.log('LoginPrompt: Final redirect path:', from);
+
+  React.useEffect(() => {
+    document.body.classList.add('loginprompt-page');
+    return () => {
+      document.body.classList.remove('loginprompt-page');
+    };
+  }, []);
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
- 
 
   // After login, redirect to the page the user originally wanted
- 
 
   const handleLogin = async () => {
     setLoading(true);
@@ -21,6 +38,11 @@ const LoginPrompt: React.FC = () => {
       return;
     }
     try {
+      console.log('LoginPrompt: Current location state:', location.state);
+      console.log('LoginPrompt: Redirect path from state:', from);
+      // Store the redirect path in sessionStorage
+      sessionStorage.setItem('redirectPath', from);
+      console.log('LoginPrompt: Stored redirect path in sessionStorage:', from);
       // Redirect to your backend's OAuth login endpoint
       window.location.href = `${API_BASE}/auth/google?email=${encodeURIComponent(email)}`;
     } catch (e) {

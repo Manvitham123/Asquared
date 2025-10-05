@@ -1,0 +1,148 @@
+/* make the steel panel the positioning parent */
+.recruitment-overlay-container{
+  position: relative;                 /* <-- key fix */
+  background-image: url('https://asquared-images.s3.amazonaws.com/images/recruitment/bg.jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-top: 20px;
+  min-height: calc(100vh - 40px);
+  padding: 1rem;
+  max-width: 100vw;
+
+  /* quick, editable offsets */
+  --board-top: 4%;
+  --board-right: 5%;
+  --letters-top: 26%;
+  --letters-left: 6%;
+  --form-top: 64%;
+  --form-left: 8%;
+}
+body.recruitment-page {
+  background-color: #decde6 !important;
+}
+
+/* whiteboard on the right */
+.board-container {
+  position: absolute;
+  top: var(--board-top);
+  right: var(--board-right);
+  width: clamp(420px, 36vw, 600px);
+  z-index: 2;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.25));
+}
+.board-img { width: 100%; display:block; }
+
+/* “FALL RECRUITMENT” letters on the left */
+.letters-img {
+  position: absolute;
+  top: var(--letters-top);
+  left: var(--letters-left);
+  width: clamp(420px, 42vw, 720px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* email form just under the letters */
+.signup-form {
+  position: absolute;
+
+  top: var(--form-top);
+  left: var(--form-left);
+  display: flex;
+  gap: 1rem;
+  z-index: 3;
+}
+    
+.signup-form input {
+  padding: .7rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #aaa;
+  font-size: 1rem;
+  width: 35vw;
+  background: #fff;
+}
+
+.signup-form button {
+  padding: .7rem 1rem;
+  border-radius: 20px;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* Application link section */
+.application-link-container {
+  position: absolute;
+  top: calc(var(--form-top) + 60px);
+  left: var(--form-left);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  width: 35vw; /* Match the width of the signup input */
+}
+
+.application-label {
+  color: rgb(198, 98, 151);
+  background-color: beige;
+  font-size: 1.6rem;
+  text-decoration: underline;
+  font-weight: bold;
+  margin: 0;
+  padding: 20px;
+  margin-top: 40px;
+ 
+  animation: pulse 2s infinite;
+}
+
+.application-button {
+  background-color: rgb(198, 98, 151);
+  color: white;
+  padding: 0.9rem 1.8rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.application-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(233, 90, 81, 0.3);
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* responsive: stack and center on small screens */
+@media (max-width: 900px) {
+  .board-container,
+  .letters-img,
+  .signup-form,
+  .application-link-container { position: static; }
+
+  .recruitment-overlay-container {
+    display: grid;
+    place-items: center;
+    gap: 14px;
+  }
+  .signup-form input {
+     width: 75vw;
+  }
+
+  .letters-img { width: min(520px, 90%); margin-top: 12px; }
+  .signup-form { margin: 9px 0 20px; }
+  .board-container { width: min(460px, 80%); }
+  
+  .application-link-container {
+    align-items: center;
+    margin-bottom: 86px;
+  }
+}

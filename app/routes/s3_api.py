@@ -274,6 +274,61 @@ def list_blogs():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@s3_api.route('/api/event-edit/<slug>', methods=['PUT'])
+@token_and_user_required
+def edit_event(slug):
+    """Edit an existing event's metadata and reorder images"""
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        if not data.get('title') or not data.get('description') or not data.get('date'):
+            return jsonify({'error': 'Title, description, and date are required'}), 400
+        
+        # Determine if this is an upcoming event based on the folder path
+        is_upcoming = data.get('isUpcoming', False)
+        folder_prefix = 'images/events2/upcoming' if is_upcoming else 'images/events2'
+        metadata_key = f'{folder_prefix}/{slug}/metadata.json'
+        
+        # Try to get existing metadata
+        try:
+            metadata_obj = s3.get_object(Bucket=BUCKET_NAME, Key=metadata_key)
+            existing_metadata = json.loads(metadata_obj['Body'].read())
+        except s3.exceptions.NoSuchKey:
+            return jsonify({'error': 'Event not found'}), 404
+        
+        # Update metadata with new values
+        from datetime import datetime
+        updated_metadata = {
+            'title': data['title'],
+            'slug': slug,  # Keep the original slug
+            'description': data['description'],
+            'location': data.get('location', existing_metadata.get('location', '')),
+            'date': data['date'],
+            'createdAt': existing_metadata.get('createdAt', datetime.utcnow().isoformat()),
+            'updatedAt': datetime.utcnow().isoformat(),
+            'isUpcoming': is_upcoming,
+            'images': data.get('images', existing_metadata.get('images', [])),  # Allow reordering
+            'totalImages': len(data.get('images', existing_metadata.get('images', [])))
+        }
+        
+        # Upload updated metadata
+        s3.put_object(
+            Bucket=BUCKET_NAME,
+            Key=metadata_key,
+            Body=json.dumps(updated_metadata, indent=2),
+            ContentType='application/json'
+        )
+        
+        return jsonify({
+            'success': True,
+            'message': 'Event updated successfully',
+            'metadata': updated_metadata
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @s3_api.route('/api/event-list', methods=['GET'])
 def list_events():
     """List all events by finding their metadata files"""
@@ -314,8 +369,8 @@ def list_events():
                         print(f"Error reading metadata for {obj['Key']}: {e}")
                         continue
         
-        # Sort by date (newest first)
-        event_metadata.sort(key=lambda x: x.get('createdAt', ''), reverse=True)
+        # Sort by date (newest first) - use the event date, not creation date
+        event_metadata.sort(key=lambda x: x.get('date', ''), reverse=True)
         
         return jsonify({
             'success': True,

@@ -1,0 +1,122 @@
+/* Coming Soon Page Styles */
+.comingsoon-page {
+  margin: 0;
+  padding: 0;
+}
+
+.comingsoon-collage-bg {
+  min-height: 100vh;
+  background: whitesmoke;
+  font-family: 'Etna Sans Serif', Arial, sans-serif;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+}
+
+.comingsoon-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem 1rem;
+}
+
+.comingsoon-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.comingsoon-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  color: #111;
+  letter-spacing: -1.5px;
+  font-family: 'Etna Sans Serif', Arial, sans-serif;
+}
+
+.comingsoon-text {
+  font-size: 1.18rem;
+  color: #444;
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+  font-family: 'Etna Sans Serif', Arial, sans-serif;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .comingsoon-main {
+    padding: 1rem 0.5rem;
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
+
+  .comingsoon-container {
+    max-width: 90%;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 12px;
+  }
+
+  .comingsoon-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+
+  .comingsoon-text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .comingsoon-main {
+    padding: 0.5rem 0.25rem;
+    padding-top: 2rem;
+  }
+
+  .comingsoon-container {
+    max-width: 95%;
+    padding: 1.5rem 1rem 1rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  .comingsoon-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.5px;
+  }
+
+  .comingsoon-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .comingsoon-container {
+    max-width: 98%;
+    padding: 1rem 0.8rem 0.8rem 0.8rem;
+  }
+
+  .comingsoon-title {
+    font-size: 1.5rem;
+  }
+
+  .comingsoon-text {
+    font-size: 0.85rem;
+  }
+}

@@ -1,5 +1,27 @@
+@font-face {
+  font-family: 'A/SQUARED 25';
+  src: url('/fonts/ASQUARED25rT.woff2') format('woff2'),
+       url('/fonts/ASQUARED25rT.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+    font-family: 'New Font';
+    src: url('/fonts/AaZNWMMXCT.woff2') format('woff2'),
+     url('/fonts/AaZNWMMXCT.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-main: 'Helvetica Neue','Archivo Black', Arial, sans-serif;
+  font-family: var(--font-family-main);
+
   line-height: 1.5;
   font-weight: 400;
 
@@ -28,6 +50,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: var(--font-family-main);
 }
 
 h1 {

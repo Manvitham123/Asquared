@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    background-color: black;
+    background-color: #f7f3e8 !important;
 }
 h1{
     font-size: 1em;
@@ -19,7 +19,7 @@ h1{
     color: white;
     letter-spacing: 2px;
   text-align: center;
-  color: white;
+  color: black;
   margin-top: 100px; /* To push it below the logo */
   text-transform: uppercase; 
   
@@ -86,7 +86,7 @@ h1{
 .front{
     z-index: 1;
     backface-visibility: hidden;
-    border-left: 5px solid black;
+    border-left: 5px solid #f7f3e8;
 
 }
 
@@ -152,7 +152,7 @@ i{
     top: 20px;
     right: 20px;
     font-size: 30px;
-    color: white;
+    color: black;
     background: transparent;
     border: none;
     cursor: pointer;

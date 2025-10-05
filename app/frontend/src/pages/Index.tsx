@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import '../assets/css/index3.css';
 import '../assets/css/home.css';
 
 const Index3Page: React.FC = () => {
-  useEffect(() => {
+  React.useEffect(() => {
+    document.body.classList.add('index-page');
     const timeout = setTimeout(() => {
       const nav = document.querySelector('.nav') as HTMLElement;
       const logo = document.querySelector('.other') as HTMLElement;
@@ -38,6 +39,7 @@ const Index3Page: React.FC = () => {
     });
 
     return () => {
+      document.body.classList.remove('index-page');
       clearTimeout(timeout);
     };
   }, []);
@@ -47,14 +49,14 @@ const Index3Page: React.FC = () => {
       <main>
         <div className="collage">
           <div className="other">
-            <img src="https://d1gmweuuxd5quh.cloudfront.net/images/asquared-logo-white-better.avif" alt="a squared logo of asquared spelled out in block letters" />
+            <img src="https://d1gmweuuxd5quh.cloudfront.net/logos/logos/asquared-logo-black-long.png" alt="a squared logo of asquared spelled out in block letters" />
           </div>
           <ul className="main-content">
             {Array.from({ length: 31 }, (_, i) => (
               <li key={i}>
                 <img
                   rel="preload"
-                  src={`https://d1gmweuuxd5quh.cloudfront.net/images/${getImagePath(i + 1)}`}
+                  src={`https://d1gmweuuxd5quh.cloudfront.net/${getImagePath(i + 1)}`}
                   alt={`Gallery image ${i + 1}`}
                 />
               </li>
@@ -68,7 +70,7 @@ const Index3Page: React.FC = () => {
               <div className="middle">
                 <Link to="/">
                   <img
-                    src="https://d1gmweuuxd5quh.cloudfront.net/images/logo.avif"
+                    src="https://d1gmweuuxd5quh.cloudfront.net/logos/a_squared_logo_black.png"
                     className="hi" 
                     alt="Logo with the letter a and an exponent of two"
                   />

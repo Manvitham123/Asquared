@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
       <div className="logo">
         <Link to="/">
           <img
-            src="https://d1gmweuuxd5quh.cloudfront.net/images/a2-logo-white-8.29.avif"
+            src="https://d1gmweuuxd5quh.cloudfront.net/logos/a_squared_logo_black.png"
             alt="Logo with the letter a and an exponent of two"
           />
         </Link>

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Flipbook } from '../components/Flipbook/Flipbook';
 import '../assets/css/flipbook.css';
 import Flipbook2 from '../components/Flipbook/Flipbook2';
-import Navbar from "../components/Navbar";
+import Navbar2 from "../components/Navbar2";
+import Bottom from "../components/Bottom";
 
 //const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
-const S3_PREFIX = "https://d1gmweuuxd5quh.cloudfront.net"; // Updated to use CloudFront for better performance
+const S3_PREFIX = "https://cdn.asquaredmag.org"; // Updated to use new CDN
 
 const pages = [
   `${S3_PREFIX}/images/sept-issue/cover.jpg`,
@@ -34,17 +35,28 @@ const Issues1: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.body.classList.add('issues1-page');
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      document.body.classList.remove('issues1-page');
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
     <>
-      <Navbar />
+      <Navbar2 />
+       <div style={{
+       background: 'black',
+        marginTop: '20px',
+        minHeight: '100vh',
+        maxWidth: '100vw'
+      }}>
       <div className="issues2-wrapper">
         {isMobile ? (
           <Flipbook2 pages={pages} title="Fall 2022 Edition" />
@@ -52,6 +64,8 @@ const Issues1: React.FC = () => {
           <Flipbook pages={pages} title="Fall 2022 Edition" />
         )}
       </div>
+      </div>
+      <Bottom />
     </>
   );
 };

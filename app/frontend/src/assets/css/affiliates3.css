@@ -1,0 +1,305 @@
+.affiliates3-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.form-input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.submit-button {
+  width: 100%;
+  height: clamp(32px, 5.2vw, 44px);
+  border: none;
+  border-radius: 6px;
+  background: #2d2d2d;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+body.affiliates3-page {
+    background-color: #decde6 !important;
+
+}
+/* darken the background like the comp */
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  pointer-events: none;
+}
+
+.overlay-container {
+  margin-top: 20px;
+  min-height: calc(100vh - 20px);
+  
+
+
+  max-width: 100vw;
+  background: url('https://asquared-images.s3.amazonaws.com/images/affiliates/bg.jpg')
+              no-repeat center center / cover;
+}
+
+/* PAPER */
+.paper-container {
+  margin-bottom: 20px;
+  position: relative;
+  width: min(1100px, 89vw);
+  min-height: clamp(700px, 80vh, 900px);
+  background: url('https://asquared-images.s3.amazonaws.com/images/affiliates/paper.png')
+              no-repeat center / 100% 100%;
+  filter: drop-shadow(0 10px 28px rgba(0,0,0,0.35));
+  animation: fadeIn 600ms ease-out both;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* inner padding so text doesn’t touch the torn edges */
+.paper-inner {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: clamp(28px, 5.5vw, 64px) clamp(24px, 6vw, 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.5vw, 30px);
+  text-align: center;
+  margin: 0 auto;
+  padding-top: clamp(40px, 10vh, 120px);
+}
+
+/* TITLE ROW */
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.sticker {
+  width: clamp(56px, 7vw, 86px);
+  height: auto;
+  position: relative;
+  margin-right: -0.5em;
+  transform: translateY(-0.1em);
+}
+
+.title-text {
+  font-family: 'A_SQUARED25', sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 5vw, 56px);
+  line-height: 1.05;
+  margin: 0;
+  color: #2d2d2d;
+  letter-spacing: .4px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+}
+
+/* BODY COPY */
+.description {
+  text-align: center;
+  font-size: clamp(14px, 1.7vw, 20px);
+  color: #3a3a3a;
+  line-height: 1.55;
+  max-width: 68ch;          /* tighter width like the comp */
+  margin: 0;
+}
+
+/* Email form styling */
+.email-form {
+  width: min(1000px, 90%);
+  margin-top: clamp(20px, 3vw, 32px);
+  display: flex;
+  justify-content: center;
+}
+
+.form-fields {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.input-group {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+  max-width: 900px;
+  margin-left: -19rem;
+  margin-top: -13px;
+}
+
+.form-input {
+  flex: 1;
+  min-width: 500px;
+  height: clamp(40px, 5.2vw, 48px);
+  padding: 0 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.06);
+  font-size: 16px;
+  color: #2d2d2d;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.submit-button-circle {
+  width: clamp(40px, 5.2vw, 48px);
+  height: clamp(40px, 5.2vw, 48px);
+  border: none;
+  border-radius: 50%;
+  background: #2d2d2d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.submit-button-circle:hover {
+  background: #000;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.submit-button-circle:active {
+  transform: scale(1);
+}
+
+.submit-button-circle svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 768px) {
+  .paper-container {
+    width: 95vw;
+    min-height: auto;
+    margin-top: 1rem;
+  }
+
+  .paper-inner {
+    padding: clamp(20px, 4vw, 40px);
+    padding-top: clamp(30px, 8vh, 80px);
+    margin-bottom: 70px;
+  }
+
+  .input-group {
+    max-width: 100%;
+    margin: 0;
+    padding: 0 ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .email-form {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .form-input {
+    min-width: unset;
+    width: calc(100% - 60px);
+    font-size: 14px;
+  }
+
+  .title-text {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+
+  .description {
+    font-size: clamp(14px, 4vw, 16px);
+    padding: 0 10px;
+  }
+
+  .sticker {
+    width: clamp(40px, 15vw, 56px);
+    margin-right: -0.3em;
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .paper-inner { 
+    align-items: center;
+    margin-bottom: 30px;
+    padding-top: clamp(20px, 6vh, 60px);
+  }
+  
+  .title-row { 
+    text-align: center;
+    flex-wrap: nowrap;
+  }
+
+  .submit-button-circle {
+    border-radius: 24px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .paper-container {
+    width: 98vw;
+    margin-top: 1rem;
+
+  }
+
+  .paper-inner {
+    margin-top: 10px;
+    margin-bottom: 25px;
+    padding-top: clamp(10px, 3vh, 30px);
+  }
+
+  .title-text {
+    margin-top: 30px;
+    font-size: clamp(20px, 5vw, 28px);
+  }
+
+  .sticker {
+    margin-top: 30px;
+    width: clamp(32px, 12vw, 40px);
+  }
+    .form-input {
+    height: 30px !important;
+  }
+    .submit-button-circle {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
+
 import { Link } from "react-router-dom";
 import Masonry from 'react-masonry-css';
 import '../assets/css/blog.css'
+import Bottom from "../components/Bottom";
+import Navbar2 from "../components/Navbar2";
+
 const API_URL = import.meta.env.VITE_API_URL;
 const breakpointColumnsObj = {
   default: 3,
@@ -11,22 +14,68 @@ const breakpointColumnsObj = {
 };
 
 // const S3_PREFIX = "https://asquared-images.s3.us-east-2.amazonaws.com";
-const S3_PREFIX = "https://d1gmweuuxd5quh.cloudfront.net"; // Updated to use CloudFront for better performance
+const S3_PREFIX = "https://cdn.asquaredmag.org"; // Updated to use new CDN
 
 interface BlogThumb {
   title: string;
+  slug: string;
+  author: string;
+  contentType: string;
   date: string;
+  createdAt: string;
   thumbnail: string;
 }
 
 const Blog: React.FC = () => {
   const [thumbnails, setThumbnails] = useState<BlogThumb[]>([]);
 
+  // Format date to display month, day, year
+  const formatDate = (dateString: string): string => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch {
+      return dateString; // Return original if parsing fails
+    }
+  };
+
   useEffect(() => {
-    fetch(`${API_URL}/api/list-images`)
+    window.scrollTo(0, 0);
+    document.body.classList.add('blog-page');
+    return () => {
+      document.body.classList.remove('blog-page');
+    };
+  }, []);
+
+  useEffect(() => {
+    // Try to fetch from the new blog list API first
+    fetch(`${API_URL}/api/blog-list`)
       .then(res => res.json())
       .then(data => {
-        // Find all thumbnails: images/blog/{title}/thumbnail.{ext}
+        if (data.success && data.blogs) {
+          // Use the new metadata structure
+          setThumbnails(data.blogs);
+        } else {
+          // Fallback to old method
+          return fetch(`${API_URL}/api/list-images`);
+        }
+      })
+      .catch(() => {
+        // Fallback to old method
+        return fetch(`${API_URL}/api/list-images`);
+      })
+      .then((res) => {
+        if (!res) return; // Already handled by new API
+        return res.json();
+      })
+      .then((data) => {
+        if (!data) return; // Already handled by new API
+        
+        // Old fallback method
         const thumbs: BlogThumb[] = (data.images || [])
           .filter((key: string) => key.startsWith('images/blog/') && key.includes('/thumbnail'))
           .map((key: string) => {
@@ -37,19 +86,27 @@ const Blog: React.FC = () => {
             let date = '';
             if (mainImage) {
               const file = mainImage.split('/')[3];
-              date = file.split('.')[0];
+              date = file.split('.')[0].split('_')[0];
             }
+            console.log(`Processing blog: ${title}, date: ${date}`);
             // Fallback to a very old date if missing or invalid
             const safeDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : '1970-01-01';
             return {
               title,
+              slug: title,
+              author: 'Unknown',
+              contentType: 'article',
               date: safeDate,
+              createdAt: safeDate,
               thumbnail: `${S3_PREFIX}/${key}`
             };
           });
         // Sort by date descending (most recent first) using Date objects
-        thumbs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        thumbs.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         setThumbnails(thumbs);
+      })
+      .catch((error) => {
+        console.error("Error fetching blog data:", error);
       });
   }, []);
 
@@ -73,7 +130,7 @@ const Blog: React.FC = () => {
 
     return (
       <div className="blog-post-card cursor-pointer group mb-4 flex flex-col items-center">
-        <Link to={`/blog/${post.title}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+        <Link to={`/blog/${post.slug || post.title}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
           <img
             src={post.thumbnail}
             alt={post.title}
@@ -82,7 +139,41 @@ const Blog: React.FC = () => {
             onLoad={handleImgLoad}
           />
           <h2 className="mt-2 font-semibold text-lg text-center">{post.title.replace(/_/g, ' ')}</h2>
-          <p className="text-center text-sm text-gray-500">{post.date}</p>
+          
+          {/* Author and Content Type */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            marginTop: '0.5rem',
+            flexWrap: 'wrap'
+          }}>
+            <span style={{
+              color: '#666',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              textTransform: 'capitalize',
+              textDecoration: 'underline'
+            }}>
+              {post.contentType}
+            </span>
+            <span style={{
+              color: '#666',
+              fontSize: '0.85rem',
+              fontWeight: 500
+            }}>
+              by {post.author}
+            </span>
+          </div>
+          
+          {/* Formatted Date */}
+          <p className="text-center text-gray-500 mt-1" style={{
+            fontSize: '0.75rem',
+            fontFamily: 'Helvetica, Arial, sans-serif'
+          }}>
+            {formatDate(post.createdAt || post.date)}
+          </p>
         </Link>
       </div>
     );
@@ -93,23 +184,63 @@ const Blog: React.FC = () => {
   const rest = thumbnails.slice(1);
 
   return (
-    <div>
-      <Navbar />
-      <main className="p-6" style={{ marginTop: '80px' }}>
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
+    <>
+      <Navbar2 />
+      <div style={{
+        background: 'black',
+        marginTop: '20px',
+        minHeight: 'calc(100vh)',
+        padding: '2rem',
+        maxWidth: '100vw'
+      }}>
+        <main className="p-6">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
           {mostRecent && (
             <div key={mostRecent.title} className="blog-post-card most-recent-card cursor-pointer group mb-4 flex flex-col items-center" style={{ gridColumn: 'span 2', width: '100%' }}>
-              <Link to={`/blog/${mostRecent.title}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+              <Link to={`/blog/${mostRecent.slug || mostRecent.title}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
                 <div style={{ position: 'relative' }}>
                   <img src={mostRecent.thumbnail} alt={mostRecent.title} className="w-full object-cover rounded-lg shadow-lg" style={{ height: 350 }} />
                   <span style={{ position: 'absolute', top: 10, left: 10, background: 'black', color: 'white', padding: '4px 12px', borderRadius: '8px', fontWeight: 600, fontSize: '1rem' }}>New!</span>
                 </div>
                 <h2 className="mt-2 font-bold text-2xl text-center">{mostRecent.title.replace(/_/g, ' ')}</h2>
-                <p className="text-center text-base text-gray-500">{mostRecent.date}</p>
+                
+                {/* Author and Content Type for Featured Post */}
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  gap: '1rem', 
+                  marginTop: '0.75rem',
+                  flexWrap: 'wrap'
+                }}>
+                  <span style={{
+                    color: '#555',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                    textTransform: 'capitalize',
+                    textDecoration: 'underline'
+                  }}>
+                    {mostRecent.contentType}
+                  </span>
+                  <span style={{
+                    color: '#555',
+                    fontSize: '0.9rem',
+                    fontWeight: 500
+                  }}>
+                    by {mostRecent.author}
+                  </span>
+                </div>
+                
+                <p className="text-center text-gray-500 mt-2" style={{
+                  fontSize: '0.8rem',
+                  fontFamily: 'Helvetica, Arial, sans-serif'
+                }}>
+                  {formatDate(mostRecent.createdAt || mostRecent.date)}
+                </p>
               </Link>
             </div>
           )}
@@ -117,8 +248,10 @@ const Blog: React.FC = () => {
             <BlogCard key={post.title} post={post} idx={idx} />
           ))}
         </Masonry>
-      </main>
-    </div>
+        </main>
+      </div>
+      <Bottom />
+    </>
   );
 };
 

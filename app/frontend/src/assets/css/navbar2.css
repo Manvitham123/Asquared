@@ -1,0 +1,245 @@
+/* ======= DESKTOP NAV (keeps your pill tabs) ======= */
+.navbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: stretch;
+  position: relative;
+  height: 70px;
+  z-index: 10;
+  background: transparent;
+  width: 100vw;
+}
+.navbar::before {
+  background: #111;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 56px;
+  border-radius: 32px 32px 18px 18px / 40px 40px 12px 12px;
+  z-index: 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+.nav-item {
+  position: relative;
+  padding: 10px 28px 8px 28px;
+  margin-left: -8px;
+  font-weight: bold;
+  color: #222;
+  cursor: pointer;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: top 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+  font-family: var(--font-family-main);
+  outline: none;
+  min-width: 130px;
+  flex: 1 1 0;
+  text-align: center;
+  border-top-left-radius: 22px 28px;
+  border-top-right-radius: 22px 28px;
+  border-bottom: none;
+  clip-path: polygon(0 22px, -16px 100%, 116% 100%, 100% 22px, calc(100% - 22px) 0, 22px 0);
+  margin-top: -12px;
+  box-sizing: border-box;
+  font-size: 1.18rem;
+}
+.nav-item:hover { color: #111; top: 4px; z-index: 7; box-shadow: 0 4px 12px rgba(0,0,0,0.13); }
+.nav-item.active { color: #111; z-index: 3; top: 7px; transform: scale(1.18); box-shadow: 2px 9px 18px rgba(0,0,0,0.13); border-bottom: none; }
+
+/* Dropdown (desktop) */
+.has-dropdown { position: relative; }
+.has-dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -8px;
+  width: 100%;
+  background: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  z-index: 7;
+  font-weight: bold;
+  flex-direction: column;
+}
+.has-dropdown:hover .dropdown-menu,
+.has-dropdown:focus-within .dropdown-menu { display: flex; }
+.dropdown-item {
+  display: flex; justify-content: center; align-items: center;
+  width: 100%; padding: 12px 0; color: #222; border-bottom: 1px solid #ddd;
+  cursor: pointer; transition: background .2s ease; text-align: center;
+}
+.dropdown-item:last-child { border-bottom: none; }
+.dropdown-item:hover { background: #ececec; color: #111; }
+
+/* Hide desktop nav on small screens */
+@media (max-width: 900px) {
+  .desktop-nav { display: none; }
+}
+/* ===== MOBILE TOP BAR (single black bar) ===== */
+.mobile-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: calc(56px + env(safe-area-inset-top)); /* safe for iOS notch */
+  padding-top: env(safe-area-inset-top);
+  background: #111;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001; /* above drawer */
+}
+@media (max-width: 900px) {
+  .mobile-topbar { display: flex; }
+}
+
+/* hamburger button (morphs to X) */
+.hamburger-btn {
+  position: absolute; left: 12px;
+  top: calc(env(safe-area-inset-top) + 8px); /* keep clear of notch */
+  width: 40px; height: 40px;
+  border: none; background: transparent; padding: 8px; cursor: pointer;
+  display: grid; place-items: center;
+  z-index: 1002; /* ensure always tappable */
+}
+.hamburger-btn span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;           /* bar length */
+  height: 2px;
+  background: #F8F4EF;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);      /* center each bar */
+  transform-origin: 50% 50%;             /* rotate around the middle */
+  transition: transform .2s ease, opacity .2s ease;
+  will-change: transform, opacity;
+}
+
+/* closed state: space the lines vertically */
+.hamburger-btn span:nth-child(1) { transform: translate(-50%, calc(-50% - 6px)); }
+.hamburger-btn span:nth-child(2) { transform: translate(-50%, -50%); }
+.hamburger-btn span:nth-child(3) { transform: translate(-50%, calc(-50% + 6px)); }
+
+/* open state: overlap and rotate to a perfect X */
+.hamburger-btn.open span:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; transform: translate(-50%, -50%) scaleX(0); }
+.hamburger-btn.open span:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg); }
+/* brand in the top bar */
+.mobile-brand {
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: #F8F4EF;
+  text-decoration: none;
+  font-size: 1.05rem;
+  line-height: 1; /* helps vertical centering */
+}
+
+/* ===== MOBILE DRAWER (no internal header) ===== */
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  background: #F3EBDD;         /* beige */
+  transform: translateY(-100%);
+  transition: transform .25s ease;
+  z-index: 999;                 /* below the top bar */
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(56px + env(safe-area-inset-top)); /* start below top bar */
+}
+.mobile-drawer.open { transform: translateY(0); }
+
+/* REMOVE any .mobile-header / .close-btn styles if present */
+.mobile-header, .close-btn { display: none !important; }
+
+/* uniform mobile list (all black text, same size boxes) */
+.mobile-list { padding: 12px 18px 40px; overflow-y: auto; width: 100%; }
+
+.mobile-link,
+.mobile-accordion-trigger {
+  width: 100%;
+  height: 56px;                /* uniform height */
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  padding: 0 16px; 
+  margin: 6px 0;
+  text-decoration: none; 
+  font-weight: 700;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1rem;
+  color: #111;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-link:hover,
+.mobile-accordion-trigger:hover { 
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mobile-link.child {
+  height: 48px; 
+  font-weight: 600; 
+  padding-left: 24px;
+}
+
+.mobile-accordion { margin-bottom: 10px; }
+.mobile-accordion .chev { transition: transform .2s; color: #111; }
+.mobile-accordion .chev.up { transform: rotate(180deg); }
+
+/* panel open/close */
+.mobile-accordion-panel { display: none; padding: 4px 0; }
+.mobile-accordion-panel.open { display: block; }
+
+/* body offset so page content isn't behind the bar on mobile */
+@media (max-width: 900px) {
+  body { padding-top: calc(56px + env(safe-area-inset-top)); }
+}
+@media (min-width: 901px) {
+  body { padding-top: 0; }
+}
+
+/* Hide desktop pill nav on small screens */
+@media (max-width: 900px) { .desktop-nav { display: none; } }
+
+/* make the top bar/X sit above everything */
+.mobile-topbar {
+  z-index: 99999; /* force above drawer */
+}
+.hamburger-btn {
+  left: calc(env(safe-area-inset-left) + 16px);
+  top: calc(env(safe-area-inset-top) + 8px);
+  z-index: 100000; /* ensure clickable above all */
+}
+
+/* drawer must be below the top bar; start below it */
+.mobile-drawer {
+  z-index: 9990; /* below topbar */
+  padding-top: calc(56px + env(safe-area-inset-top));
+}
+
+/* force black text for all mobile menu items */
+.mobile-link,
+.mobile-accordion-trigger,
+.mobile-accordion-trigger span,
+.mobile-accordion .chev {
+  color: #111 !important;
+}
+
+/* keep the white card background, uniform sizing */
+.mobile-link,
+.mobile-accordion-trigger {
+  height: 56px;
+}
+
+.mobile-topbar-spacer { display: none; }
+
+/* visible on mobile, same height as the fixed top bar */
+@media (max-width: 900px) {
+  .mobile-topbar-spacer {
+    display: block;
+    height: calc(35px + env(safe-area-inset-top));
+  }
+}

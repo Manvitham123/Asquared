@@ -2,15 +2,16 @@ body, html {
   margin: 0;
   padding: 0;
   width: 100%;
-  color: #fff;
-  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  background: #f7f3e8 !important;
+  color: #111 !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   overflow-x: hidden;
   height: max-content;
 }
 
 
 .hero-section {
-  background-image: url('https://d1gmweuuxd5quh.cloudfront.net/images/elizabethasquaredbackground.PNG.jpg');
+  background-image: url('https://d1gmweuuxd5quh.cloudfront.net/IMG_5585.avif');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -18,25 +19,25 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
 .hero-section h1 {
-  border: 2px #fff  solid;
+  border: 2px black solid;
   border-radius: 10px;
   padding: 10px;
   background-color: white;
   font-size: 5vw;
   color: black;
-  font-weight: 200;
+  font-weight: 600;
   text-align: center;
+
 }
 
 .about-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 80px 20px;
+
   background-color: black;
 }
 
@@ -50,12 +51,12 @@ body, html {
 
 .about-us h2 {
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  
   letter-spacing: 1px;
 }
 
 .about-us p {
-  margin-bottom: 20px;
-  font-size: 1.2rem;
-  font-weight: 300;
+
+  font-size: 1.4rem;
+  font-weight: 600;
 }

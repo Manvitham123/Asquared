@@ -31,7 +31,7 @@ const Flipbook2: React.FC<Flipbook2Props> = ({ pages, title = 'Magazine' }) => {
       </button>
       <div className="book" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'auto', minHeight: '420px', marginTop: '20px' }}>
         <img
-          src={pages[currentIndex].startsWith('http') ? pages[currentIndex] : `https://d1gmweuuxd5quh.cloudfront.net/images/${pages[currentIndex].replace(/^\/+/,'')}`}
+          src={pages[currentIndex].startsWith('http') ? pages[currentIndex] : `https://d1gmweuuxd5quh.cloudfront.net/${pages[currentIndex].replace(/^\/+/,'')}`}
           alt={`Page ${currentIndex + 1}`}
           style={{ width: '100%', maxWidth: '650px', height: 'auto', minHeight: '420px', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 4px 24px #0008' }}
         />
@@ -41,7 +41,7 @@ const Flipbook2: React.FC<Flipbook2Props> = ({ pages, title = 'Magazine' }) => {
           <path d="M12 8L20 16L12 24" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </button>
-      <div style={{ marginTop: '18px', color: '#fff', fontSize: '1rem' , textAlign: 'center' }}>
+      <div style={{ marginTop: '30px', color: '#fff', fontSize: '1rem' , textAlign: 'center' }}>
         {currentIndex + 1} / {pages.length}
       </div>
     </div>

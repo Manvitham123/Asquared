@@ -1,0 +1,308 @@
+/* Affiliates2 Page Styles */
+.affiliates2-page {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.affiliates-background{
+    min-height: 100vh;
+    background: #decde6; 
+
+}
+
+.affiliates2-container {
+  min-height: 70vh;
+  position: relative;
+  background: #decde6; /* Join us tab color as folder background */
+  overflow: hidden;
+  padding: 20px;
+}
+
+.affiliates2-container::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  right: 10px;
+  bottom: 0px;
+  background: linear-gradient(135deg, #8B9DC3 0%, #DDB892 50%, #B8C6F7 100%);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.stickers-background {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 40px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.background-sticker {
+  position: absolute;
+  opacity: 0.6;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+  animation: float 6s ease-in-out infinite;
+}
+
+.background-sticker:nth-child(even) {
+  animation-delay: -3s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(var(--rotation, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--rotation, 0deg)); }
+}
+
+.affiliates2-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.slides-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-card {
+  background: #B8C6F7;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  border: 4px solid #2A237A;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: absolute;
+}
+
+.slide-card:first-child {
+  /* Affiliate Program - Larger box, positioned left */
+  width: 620px;
+  height: 380px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.slide-card:last-child {
+  /* Model Casting - Smaller box, positioned right with overlap */
+  width: 550px;
+  height: 320px;
+  right: 1%;
+  top: 60%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.slide-header {
+  padding: 12px 20px;
+  border-bottom: 3px solid #2A237A;
+  background: rgba(42, 35, 122, 0.1);
+}
+
+.slide-indicator {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  background: #FF1493;
+  border-radius: 2px;
+  border: 1px solid #2A237A;
+  box-shadow: 2px 2px 0px rgba(42, 35, 122, 0.8);
+}
+
+.slide-indicator::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background: rgba(42, 35, 122, 0.6);
+  border-radius: 2px;
+  border: 1px solid #2A237A;
+  z-index: -1;
+}
+
+.slide-body {
+  padding: 24px 28px 70px 28px;
+  text-align: center;
+}
+
+.slide-card:first-child .slide-body {
+  /* More padding for the larger affiliate box */
+  padding: 28px 32px 80px 32px;
+}
+
+.slide-title {
+  font-family: 'Archivo Black', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin: 0 0 20px 0;
+  color: #000;
+  line-height: 1.1;
+}
+
+.slide-card:first-child .slide-title {
+  /* Larger title for affiliate program */
+  font-size: 2.4rem;
+  margin-bottom: 22px;
+}
+
+.slide-description {
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0 0 24px 0;
+  color: #000;
+  max-width: 100%;
+}
+
+.slide-card:first-child .slide-description {
+  /* Larger text for affiliate program with more content */
+  font-size: 1rem;
+  line-height: 1.45;
+  margin-bottom: 28px;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  max-width: 300px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.email-input {
+  background: #F5F5DC;
+  border: 3px solid #000;
+  border-radius: 32px;
+  padding: 12px 20px;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  color: #000;
+  outline: none;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.email-input:focus {
+  box-shadow: 0 0 0 2px rgba(42, 35, 122, 0.3);
+}
+
+.email-input::placeholder {
+  color: #666;
+}
+
+.submit-button {
+  background: #F5F5DC;
+  border: 3px solid #000;
+  border-radius: 50%;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  font-family: Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #E6E6C8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submit-message {
+  font-size: 0.9rem;
+  margin-top: 8px;
+  color: #2A237A;
+  font-weight: 500;
+}
+
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 3px solid #2A237A;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 6px;
+  background: rgba(42, 35, 122, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #2A237A;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #FF1493;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .affiliates2-content {
+    padding: 1rem;
+  }
+  
+  .slide-card {
+    max-width: 100%;
+  }
+  
+  .slide-title {
+    font-size: 2rem;
+  }
+  
+  .slide-description {
+    font-size: 1rem;
+  }
+  
+  .slide-body {
+    padding: 32px 24px;
+  }
+}
+
+/* Sticker positioning variations */
+.sticker-1 { --rotation: 15deg; }
+.sticker-2 { --rotation: -20deg; }
+.sticker-3 { --rotation: 10deg; }
+.sticker-4 { --rotation: -15deg; }
+.sticker-5 { --rotation: 25deg; }
+.sticker-6 { --rotation: -10deg; }

@@ -11,25 +11,23 @@ nav {
   height: 75px; /* increased from 60px to 90px */
   background-color: #111; /* nostalgic neutral */
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   z-index: 1000;
   border-bottom: 1px solid #F8F4EF;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 0 20px;
 }
 
-.nav-inner {
-  width: 100%;
-  max-width: 950px;
-  margin: 0 auto;
+.logo {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 .logo img {
   margin-bottom: 0;
-  height: 70px; /* adjust as needed for best fit */
+  height: 50px; /* reduced from 70px to give more space */
   width: auto;
   max-width: 100%;
   object-fit: contain;
@@ -129,7 +127,7 @@ li a:focus {
     width: auto !important;
     max-width: 180px !important;
     object-fit: contain;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     display: block;
     margin-left: 0;
     margin-right: 0;

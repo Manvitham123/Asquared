@@ -1,34 +1,35 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
 import "../assets/css/index2.css";
 import "../assets/css/navbar.css";
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  useEffect(() => {
+  React.useEffect(() => {
+    document.body.classList.add('landing-page');
     const timer = setTimeout(() => {
        navigate('/index');
     }, 3000);
-    return () => clearTimeout(timer);
+    return () => {
+      document.body.classList.remove('landing-page');
+      clearTimeout(timer);
+    };
   }, [navigate]);
 
   return (
     <main>
-    
         <a href="/index3">
           <img
-            src="https://d1gmweuuxd5quh.cloudfront.net/images/logo.avif"
+            src="https://d1gmweuuxd5quh.cloudfront.net/logos/a_squared_logo_black.png"
             className="hi"
             alt="Logo with the letter a and an exponent of two"
           />
         </a>
-
       <div className="loader">
         <span className="loader_elemnt"></span>
         <span className="loader_elemnt"></span>
         <span className="loader_elemnt"></span>
       </div>
-
       <div className="nav">
         <ul>
           <li><a href="/" tabIndex={0}>Home</a></li>
@@ -40,7 +41,6 @@ const LandingPage: React.FC = () => {
           <li><a href="/shoots" tabIndex={0}>Blog</a></li>
         </ul>
       </div>
-
       <div><h1 className="footer-text">Loading</h1></div>
     </main>
   );

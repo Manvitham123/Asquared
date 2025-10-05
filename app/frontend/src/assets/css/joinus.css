@@ -1,4 +1,10 @@
-
+body.joinus-page {
+  color: #111 !important;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  margin: 0;
+  padding: 0;
+  background: #decde6 !important;
+}
 
 .logo img {
     position: absolute;
@@ -52,6 +58,9 @@
     max-width: 400px; 
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.8); 
+    background-color: #decde6;
+    color:black;
+    opacity: 0.9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
@@ -61,7 +70,7 @@
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 400;
-    color: white;
+    color: black;
     font-weight: 100;
 }
 
@@ -73,7 +82,7 @@
     display: block;
     margin-bottom: 5px;
     font-weight: 100;
-    color: white;
+    color: black;
 }
 
 .form-group input {
