@@ -147,7 +147,7 @@ const Team: React.FC = () => {
             <div className="team-grid">
               {executiveBoard.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
-                  No executive board members found.
+                  Coming soon...
                 </div>
               ) : (
                 executiveBoard.map((member, index) => (
@@ -213,7 +213,7 @@ const Team: React.FC = () => {
               <div className="team-grid">
                 {team.members.length === 0 ? (
                   <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
-                    No {team.title.toLowerCase()} members found.
+                    Coming soon...
                   </div>
                 ) : (
                   team.members.map((member, index) => (

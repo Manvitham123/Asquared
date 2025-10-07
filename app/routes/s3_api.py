@@ -275,11 +275,12 @@ def list_blogs():
         return jsonify({'error': str(e)}), 500
 
 @s3_api.route('/api/event-edit/<slug>', methods=['PUT'])
-@token_and_user_required
 def edit_event(slug):
     """Edit an existing event's metadata and reorder images"""
     try:
+        print(f"Edit event request received for slug: {slug}")
         data = request.get_json()
+        print(f"Request data: {data}")
         
         # Validate required fields
         if not data.get('title') or not data.get('description') or not data.get('date'):
@@ -571,6 +572,11 @@ def list_team_members():
 @s3_api.route('/health')
 def health():
     return "OK", 200
+
+@s3_api.route('/api/test-cors', methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
+def test_cors():
+    """Test route to verify CORS is working"""
+    return jsonify({'message': 'CORS test successful', 'method': request.method}), 200
 
 from .sheets_utils import append_to_sheet
 

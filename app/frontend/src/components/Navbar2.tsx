@@ -14,14 +14,15 @@ type Tab = {
 const tabs: Tab[] = [
   { name: "Logo", color: "#dbd5c2", logo: true, to: "/" },
   { name: "Our Team", color: "#7e9db0", to: "/team" },
-  {
-    name: "Media",
-    color: "#97ac75",
-    dropdown: [
-      { name: "Mags", to: "/magazines" },
-      { name: "other", to: "/coming-soon" },
-    ],
-  },
+  {name: "Mags", color: "#97ac75", to: "/magazines" },
+  // {
+  //   name: "Media",
+  //   color: "#97ac75",
+  //   dropdown: [
+  //     { name: "Mags", to: "/magazines" },
+  //     { name: "other", to: "/coming-soon" },
+  //   ],
+  // },
   { name: "Events", color: "#e95a51", to: "/events" },
   { name: "Blog", color: "#c66297", to: "/blog" },
   {

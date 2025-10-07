@@ -18,7 +18,7 @@ const ComingSoon: React.FC = () => {
         <div className="comingsoon-container">
           <h1 className="comingsoon-title">Coming Soon</h1>
           <p className="comingsoon-text">
-            This page is under construction.<br />Check back soon!
+            This page is offline for now<br />Check back soon!
           </p>
         </div>
       </main>

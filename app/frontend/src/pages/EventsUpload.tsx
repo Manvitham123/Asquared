@@ -135,8 +135,7 @@ const EventsUpload: React.FC = () => {
       const response = await fetch(`${API_URL}/api/event-edit/${editingEvent.slug}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          credentials: 'include'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           title: editTitle,
